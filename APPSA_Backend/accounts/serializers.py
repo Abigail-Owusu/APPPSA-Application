@@ -1,5 +1,7 @@
 from rest_framework import serializers
+# from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import CustomUser
+from .helper import get_user
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -38,4 +40,26 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
-                        
+# class LoginSerializer(TokenObtainPairSerializer):
+#     email = serializers.EmailField(
+#         max_length=200,
+#         min_length=4, 
+#         required=True, 
+#         help_text='Required. 4-200 characters. Must be a valid email address.'
+#         )
+    
+#     password = serializers.CharField(
+#         label=("Password"),
+#         trim_whitespace=False,
+#         required=True,
+#         help_text='Must contain at least one letter and one number.'
+#         )
+#     # token = serializers.SerializerMethodField("get_token")
+#     class Meta:
+#         model = CustomUser
+#         fields = ['email', 'password']
+#         extra_kwargs = {
+#             'password': {'write_only': True},
+#             'access_token': {'read_only': True},
+#             'refresh_token': {'read_only': True},
+#             }
