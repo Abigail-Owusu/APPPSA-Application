@@ -1,7 +1,7 @@
 from rest_framework import serializers
 # from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import CustomUser
-from .helper import get_user
+
 
 
 class UserSerializer(serializers.ModelSerializer):

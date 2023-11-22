@@ -11,7 +11,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .serializers import UserSerializer
-from .helper import get_user
+
 from Helper_Functions.account_helpers import send_verification_email
 from django.contrib.auth.tokens import default_token_generator
 from django.shortcuts import render
@@ -60,7 +60,7 @@ def user_login(request):
 
         # user = authenticate(request, email=email, password=password)
         user = CustomUser.objects.filter(email=email).first()
-        print(user)
+    
         if user is None:
             return Response({'error': 'User does not exist!!'}, status=status.HTTP_404_NOT_FOUND)
 
