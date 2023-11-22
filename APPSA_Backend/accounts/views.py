@@ -19,18 +19,20 @@ from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 
 @api_view(['GET'])
-def verify_email(request, uidb64, token):
+def verify_email(request):
     try:
-        uid = force_str(urlsafe_b64decode(uidb64))
+        user_idb64 = request.query_params.get('uid')
+        uid = force_str(urlsafe_base64_decode(user_idb64))
         user = CustomUser.objects.get(pk=uid)
     except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
         user = None
     
-    if user is not None and default_token_generator.check_token(user, token):
+    if user is not None:
         user.email_verified = True
         user.save()
         return render(request, 'email_verified.html')
     else:
+        
         return render(request, 'email_verification_failed.html')
     
 @api_view(['POST'])
@@ -53,12 +55,14 @@ def register_user(request):
 def user_login(request):
     if request.method == 'POST':
         email = request.data.get('email')
+        print(email)
         password = request.data.get('password')
 
         # user = authenticate(request, email=email, password=password)
-        user = get_user(email)
+        user = CustomUser.objects.filter(email=email).first()
+        print(user)
         if user is None:
-            return Response({'error': 'User does not exist!'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'User does not exist!!'}, status=status.HTTP_404_NOT_FOUND)
 
         if user.check_password(password):
             print("User is authenticated")
