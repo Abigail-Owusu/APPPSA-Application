@@ -13,6 +13,7 @@
 
 from django.db import models
 from django.utils import timezone
+from django.core.mail import send_mail
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 # Create your models here.
@@ -51,6 +52,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     middle_name = models.CharField(max_length=100, null=True, blank=True)
     maiden_name = models.CharField(max_length=100, null=True, blank=True)
     email = models.EmailField(max_length=200, null=False, blank=False, unique=True)
+    email_verified = models.BooleanField(default=False)
     password = models.CharField(max_length=200, null=False, blank=False)
     nationality = models.CharField(max_length=200, null=False, blank=False)
     postal_code = models.CharField(max_length=20, null=False, blank=False)
