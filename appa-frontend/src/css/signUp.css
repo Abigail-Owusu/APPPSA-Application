@@ -1,0 +1,144 @@
+
+
+.sign-up-container{
+    display: flex;
+    background-color: #000071;
+}
+
+.sign-up-container .left{
+    padding-top: 5%;
+    flex-basis: 35%;
+    background-color: white;
+    height: 91vh;
+    border: 1px solid white;
+    border-radius: 0 20px 20px 0;
+}
+
+.sign-up-container .right{
+    background-color: #000071;
+    height: 91vh;
+    flex-basis: 65%;
+}
+
+.sign-up-container .left h3{
+    font-weight: bold;
+    font-size: 25px;
+    text-align: center;
+    color: #000071;
+
+}
+
+.sign-up-container .left h4{
+    text-align: center;
+    font-size: 22px;
+    font-style: italic;
+    color: #000071;
+}
+
+.sign-up-container .left h4 span{
+    text-align: center;
+    font-size: 22px;
+    font-style: italic;
+    color: #FFD700;
+}
+
+.sign-up-container .logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* border: 1px solid red; */
+
+}
+
+.arrow-img{
+    margin-left: 10%;
+
+}
+.sign-up-container .logo img{
+    width: 50%;
+}
+
+.sign-up-link{
+    display: flex;
+    margin-top: 20px;
+    gap: 20px;
+    align-items: center;
+    height: 5vh;
+}
+.sign-up-link a{
+    color: #000071;
+    font-style: italic;
+    font-size: 20px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.sign-up-link a:hover{
+    color: #FFD700;
+
+}
+
+.sign-up-container .right{
+    padding: 2%;
+}
+
+.sign-up-container .right h1{
+    font-size: 45px;
+    color: white;
+    font-style: italic;
+    margin-bottom: 10px;
+
+}
+
+.sign-up-container .right h4{
+    font-size: 19px;
+    color: white;
+    font-weight: 400;
+    font-style: italic;
+    margin-top: 0;
+
+}
+
+.sign-up-container .right .button{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.sign-up-container .right button{
+    padding: 10px;
+    background-color: white;
+    color: #000071;
+    border: 1px solid white;
+    border-radius: 5px;
+    font-size: 17px;
+    font-weight: 900;
+    align-self: center ;
+    width: 13%;
+}
+
+.field-row{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.field-row .field-box{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.field-row .field-box label{
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+.field-row .field-box input{
+    width: 90%;
+    height: 20px;
+    border-radius: 5px;
+    border: 1px solid white;
+    padding: 10px;
+}
