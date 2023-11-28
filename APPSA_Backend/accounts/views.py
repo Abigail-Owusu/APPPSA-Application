@@ -101,3 +101,42 @@ def view_profile(request):
             return Response({'error': 'User does not exist!!'}, status=status.HTTP_404_NOT_FOUND)
         serializer = UserSerializer(user)
         return Response({'data': serializer.data}, status=status.HTTP_200_OK)
+    
+@api_view(['PATCH'])
+# @permission_classes([IsAuthenticated])
+def update_profile(request):
+    """
+    Update the profile of a user
+    Args:
+        request:
+        email: The email of the user whose profile is to be updated
+    Returns:
+        The updated profile of the user
+    """
+@api_view(['PATCH'])
+# @permission_classes([IsAuthenticated])
+def edit_profile(request):
+    # Retrieve the authenticated user
+    authenticated_user = request.user
+
+    # Retrieve the email from the URL query parameters
+    email = request.query_params.get('email')
+
+    # Ensure that the authenticated user is editing their own profile
+    if "abigailowusu296@gmail.com" != email:
+        return Response({'error': 'Permission denied. You can only edit your own profile.'}, status=status.HTTP_403_FORBIDDEN)
+
+    # Retrieve the user to be edited
+    user_to_edit = CustomUser.objects.filter(email=email).first()
+
+    # Check if the user exists
+    if user_to_edit is None:
+        return Response({'error': 'User does not exist!!'}, status=status.HTTP_404_NOT_FOUND)
+
+    # Serialize and update the user's profile
+    serializer = UserSerializer(user_to_edit, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({'message': 'Profile updated successfully', 'data': serializer.data}, status=status.HTTP_200_OK)
+    
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
