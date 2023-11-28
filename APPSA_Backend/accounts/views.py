@@ -82,3 +82,22 @@ def user_logout(request):
             return Response({'message': 'Successfully logged out.'}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+def view_profile(request):
+    """
+    View the profile of a user
+    Args:
+        request:
+        email: The email of the user whose profile is to be viewed
+    Returns:
+        The profile of the user
+    """
+    if request.method == 'GET':
+        email = request.query_params.get('email')
+        user = CustomUser.objects.filter(email=email).first()
+        if user is None:
+            return Response({'error': 'User does not exist!!'}, status=status.HTTP_404_NOT_FOUND)
+        serializer = UserSerializer(user)
+        return Response({'data': serializer.data}, status=status.HTTP_200_OK)
