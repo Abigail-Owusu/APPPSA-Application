@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
                   'email', 'password', 'first_name_next_of_kin', 'last_name_next_of_kin', 'tel_next_of_kin',
                   'year_group1', 'chapter1', 'house1']
         extra_kwargs = {'password': {'write_only': True}}
-
+    
     def create(self, validated_data):
         user = CustomUser(
             title=validated_data['title'],
