@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserProfileUpdateSerializer
 
 from Helper_Functions.account_helpers import send_verification_email
 from django.contrib.auth.tokens import default_token_generator
@@ -134,7 +134,7 @@ def edit_profile(request):
         return Response({'error': 'User does not exist!!'}, status=status.HTTP_404_NOT_FOUND)
 
     # Serialize and update the user's profile
-    serializer = UserSerializer(user_to_edit, data=request.data, partial=True)
+    serializer = UserProfileUpdateSerializer(user_to_edit, data=request.data, partial=True)
     if serializer.is_valid():
         serializer.save()
         return Response({'message': 'Profile updated successfully', 'data': serializer.data}, status=status.HTTP_200_OK)

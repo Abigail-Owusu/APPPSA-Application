@@ -63,3 +63,7 @@ class UserSerializer(serializers.ModelSerializer):
 #             'access_token': {'read_only': True},
 #             'refresh_token': {'read_only': True},
 #             }
+class UserProfileUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'other_names', 'middle_name', 'maiden_name', 'nationality', 'postal_code', 'zip_code', 'city', 'district', 'country', 'profession', 'current_organization', 'dob', 'tel_code', 'telephone', 'additional_tel', 'first_name_next_of_kin', 'last_name_next_of_kin', 'tel_next_of_kin', 'year_group1', 'year_group2', 'chapter1', 'chapter2', 'chapter3', 'house1', 'house2']
