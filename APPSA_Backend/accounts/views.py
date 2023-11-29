@@ -95,7 +95,7 @@ def view_profile(request):
         The profile of the user
     """
     
-    email = request.user.email
+    email = request.query_params.get('email')
     user = CustomUser.objects.filter(email=email).first()
     if user is None:
         return Response({'error': 'User does not exist!!'}, status=status.HTTP_404_NOT_FOUND)
@@ -121,7 +121,12 @@ def edit_profile(request):
 
     # Retrieve the email from the URL query parameters
     email = request.query_params.get('email')
-    user = CustomUser.objects.filter(email=email).first()
+
+    # Ensure that the email is not empty
+    try:
+        user = CustomUser.objects.get(email=email)
+    except CustomUser.DoesNotExist:
+        return Response({'error': 'User does not exist!'}, status=status.HTTP_404_NOT_FOUND)
 
     # Ensure that the authenticated user is editing their own profile
     if request.user.email != user.email:
