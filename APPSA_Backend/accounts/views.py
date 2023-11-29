@@ -123,7 +123,7 @@ def edit_profile(request):
     email = request.query_params.get('email')
 
     # Ensure that the authenticated user is editing their own profile
-    if "abigailowusu296@gmail.com" != email:
+    if "abigailowusu296@gmail.com".lower() != email.lower():
         return Response({'error': 'Permission denied. You can only edit your own profile.'}, status=status.HTTP_403_FORBIDDEN)
 
     # Retrieve the user to be edited
@@ -131,7 +131,7 @@ def edit_profile(request):
 
     # Check if the user exists
     if user_to_edit is None:
-        return Response({'error': 'User does not exist!!'}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'error': 'User does not exist!'}, status=status.HTTP_404_NOT_FOUND)
 
     # Serialize and update the user's profile
     serializer = UserProfileUpdateSerializer(user_to_edit, data=request.data, partial=True)
