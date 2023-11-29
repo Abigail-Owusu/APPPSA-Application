@@ -84,7 +84,7 @@ def user_logout(request):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def view_profile(request):
     """
     View the profile of a user
@@ -94,13 +94,13 @@ def view_profile(request):
     Returns:
         The profile of the user
     """
-    if request.method == 'GET':
-        email = request.query_params.get('email')
-        user = CustomUser.objects.filter(email=email).first()
-        if user is None:
-            return Response({'error': 'User does not exist!!'}, status=status.HTTP_404_NOT_FOUND)
-        serializer = UserSerializer(user)
-        return Response({'data': serializer.data}, status=status.HTTP_200_OK)
+    
+    email = request.user.email
+    user = CustomUser.objects.filter(email=email).first()
+    if user is None:
+        return Response({'error': 'User does not exist!!'}, status=status.HTTP_404_NOT_FOUND)
+    serializer = UserSerializer(user)
+    return Response({'data': serializer.data}, status=status.HTTP_200_OK)
     
 @api_view(['PATCH'])
 # @permission_classes([IsAuthenticated])
@@ -121,9 +121,10 @@ def edit_profile(request):
 
     # Retrieve the email from the URL query parameters
     email = request.query_params.get('email')
+    user = CustomUser.objects.filter(email=email).first()
 
     # Ensure that the authenticated user is editing their own profile
-    if "abigailowusu296@gmail.com".lower() != email.lower():
+    if request.user.email != user.email:
         return Response({'error': 'Permission denied. You can only edit your own profile.'}, status=status.HTTP_403_FORBIDDEN)
 
     # Retrieve the user to be edited
