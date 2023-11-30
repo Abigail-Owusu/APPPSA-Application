@@ -52,7 +52,8 @@ def get_number_of_likes(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_posts(request):
-    posts = Post.objects.all()
+    # Retrieve posts ordered by timestamp in descending order (most recent first)
+    posts = Post.objects.all().order_by('-timestamp')
     serializer = PostSerializer(posts, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
