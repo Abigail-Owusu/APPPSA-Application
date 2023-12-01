@@ -62,7 +62,7 @@ def get_posts(request):
 @permission_classes([IsAuthenticated])
 def get_post_by_user(request):
     user = request.query_params.get('user')
-    post = Post.objects.filter(user=user).order_by('timestamp')
+    post = Post.objects.filter(user=user).order_by('-timestamp')
     serializer = PostSerializer(post, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
