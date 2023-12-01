@@ -7,6 +7,7 @@ class Message(models.Model):
     sender = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='sender', blank=True)
     receiver = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='receiver', blank=False, null=False)
     text = models.TextField()
+    image = models.ImageField(upload_to='message_images/', null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
     is_deleted = models.BooleanField(default=False)
