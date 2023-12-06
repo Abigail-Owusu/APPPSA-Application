@@ -1,8 +1,46 @@
-import '../css/login.css';
+import React, { useState } from 'react';
 import logo from '../images/appa_logo.png'
 import svg from '../images/login_svg.png'
+import '../css/login.css';
 
 const Login = () => {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isPending, setIsPending] = useState(false);
+    const [loginError, setLoginError] = useState(false);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const credentials = {email, password};
+
+        setIsPending(true)
+
+        fetch('http://127.0.0.1:8000/api/login/', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(credentials)
+        })
+        .then(response => {
+            if (!response.ok){
+                throw new Error('Login failed');
+            }
+            const data = response.json();
+            console.log(data)
+        })
+        .then(data => {
+            console.log("Login successful");
+        })
+        .catch(error => {
+            console.error("Login error: ", error.message);
+            setLoginError(true);
+        })
+        .finally(() => {
+            setIsPending(false)
+        });
+    };
+
     return ( 
         <div className="login-container">
             <div className="left">
@@ -18,11 +56,22 @@ const Login = () => {
 
                 <h1> Welcome back! </h1>
                 <h5> Log in to your account </h5>
-                <form action="">
+                <form onSubmit={handleSubmit}>
                     <p> Email </p>
-                    <input type="text" />
+                    <input 
+                    type="text" 
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    />
                     <p> Password </p>
-                    <input type="text" />
+                    <input 
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+
+                    />
                     <br />
                     <div className="forgot-box">
                         <div className="remember-me">
@@ -31,7 +80,7 @@ const Login = () => {
                         </div>
                         <a href=""> Forgot Password? </a>
                     </div>
-                    <button> Submit </button>
+                    <button> {isPending ? 'Logging in...' : 'Login'} </button>
                 </form>    
 
             </div>

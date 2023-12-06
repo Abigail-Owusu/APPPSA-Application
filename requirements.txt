@@ -3,3 +3,4 @@ djangorestframework
 psycopg2
 djangorestframework-simplejwt
 autopep8
+django-cors-headers

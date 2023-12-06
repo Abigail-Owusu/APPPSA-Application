@@ -7,9 +7,11 @@
     height: 100%;
 
 }
-.left{
+.login-container .left{
     padding: 2%;
     flex-basis: 60%;
+    align-items: flex-start!important;
+    justify-content: flex-start!important;
 
 }
 
@@ -38,7 +40,7 @@
     color: #000071;
     font-style: italic;
     font-size: 45px;
-    margin-top: 5%;
+    margin-top: 12% !important;
     font-weight: 900;
 }
 
@@ -47,6 +49,7 @@
     font-weight: 700;
     font-style: italic;
     color: #FFB800;
+    margin: 0;
 }
 
 .left > form > p{
@@ -55,10 +58,13 @@
     font-size: 20px;
 }
 
+form{
+    width: 100%;
+}
 .left input{
     background-color: #DFDFDF;
     padding: 14px;
-    width: 80%;
+    width: 85%;
     border: none;
     border-radius: 7px;
     font-size: 20px;
@@ -68,7 +74,7 @@
     /* margin-top: 2%; */
     background-color: #000071;
     padding: 20px;
-    width: 83%;
+    width: 88%;
     color: white;
     font-weight: 700;
     border: none;
@@ -77,7 +83,7 @@
 }
 
 .forgot-box{
-    max-width: 83%;
+    max-width: 88%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -100,12 +106,14 @@
     font-weight: 600;
 }
 
-.right{
+.login-container .right{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
     justify-content: center;
-    flex-basis: 40%;
+    margin-left: 10%;
+    flex-basis: 40% !important;
+    /* border: 1px solid red; */
     height: 100%;
     /* border: 1px solid red; */
 }
@@ -127,3 +135,5 @@
     max-width: 100%;
     max-height: 100%;
 }
+
+
