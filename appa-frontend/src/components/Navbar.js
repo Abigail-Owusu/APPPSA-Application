@@ -5,6 +5,7 @@ import profile from '../images/profile.png'
 import discussions from '../images/discussions.png'
 import donate from '../images/donate.png'
 import help from '../images/help.png'
+import { Link } from 'react-router-dom'
 
 
 const Navbar = () => {
@@ -24,35 +25,35 @@ const Navbar = () => {
                     <div className="menu-img-box">
                         <img src={home} alt="" />
                     </div>
-                    <a href=""> Home </a>
+                    <Link to="/"> Home </Link>
                 </div>
 
                 <div className="menu-item">
                     <div className="menu-img-box">
                         <img src={profile} alt="" />
                     </div>
-                    <a href=''> Profile </a>
+                    <Link to='/profile'> Profile </Link>
                 </div>
 
                 <div className="menu-item">
                     <div className="menu-img-box">
                         <img src={discussions} alt="" />
                     </div>
-                    <a href=''> Discussions </a>
+                    <Link to='/discussions'> Discussions </Link>
                 </div>
 
                 <div className="menu-item">
                     <div className="menu-img-box">
                         <img src={donate} alt="" />
                     </div>
-                    <a href=''> Donate Now </a>
+                    <Link to='/donate'> Donate Now </Link>
                 </div>
 
                 <div className="menu-item">
                     <div className="menu-img-box">
                         <img src={help} alt="" />
                     </div>
-                    <a href=''> Help </a>
+                    <Link to='/'> Help </Link>
                 </div>
             </div>
 

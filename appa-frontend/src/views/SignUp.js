@@ -1,6 +1,6 @@
 import '../css/signUp.css';
 import logo from '../images/appa_logo.png'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import { useEffect, useState } from "react";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';

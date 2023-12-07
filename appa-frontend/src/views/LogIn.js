@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import logo from '../images/appa_logo.png'
 import svg from '../images/login_svg.png'
 import '../css/login.css';
+import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
 
@@ -10,36 +13,92 @@ const Login = () => {
     const [isPending, setIsPending] = useState(false);
     const [loginError, setLoginError] = useState(false);
 
+    const navigate = useNavigate();
+
     const handleSubmit = (e) => {
         e.preventDefault();
+    
+        console.log("Running");
+        if (validate()) {
+            const credentials = { email, password };
+    
+            setIsPending(true);
+    
+            fetch('http://127.0.0.1:8000/api/login/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(credentials),
+            })
+                .then(response => {
+                    if (!response.ok) {
 
-        const credentials = {email, password};
+                        if (response.status === 404){
+                            throw new Error("User not found")
+                        }
 
-        setIsPending(true)
+                        else if (response.status === 401){
+                            throw new Error("Wrong password")
+                        }
+                        else{
+                            throw new Error('Login failed');
 
-        fetch('http://127.0.0.1:8000/api/login/', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(credentials)
-        })
-        .then(response => {
-            if (!response.ok){
-                throw new Error('Login failed');
-            }
-            const data = response.json();
-            console.log(data)
-        })
-        .then(data => {
-            console.log("Login successful");
-        })
-        .catch(error => {
-            console.error("Login error: ", error.message);
-            setLoginError(true);
-        })
-        .finally(() => {
-            setIsPending(false)
-        });
+                        }
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data)
+                    if (data.message === "Login successful") {
+                        toast.success(data.message, {
+                            position: toast.POSITION.TOP_CENTER,
+                            autoClose: 2000,
+                            style: {
+                                width: '400px',
+                            },
+                        });
+                        
+                        setTimeout(() => {
+                            navigate('/discussions');
+                        }, 2000);
+                    } 
+                })
+                .catch(error => {
+                    console.error("Login error: ", error.message);
+                    setLoginError(true);
+    
+                    toast.error("Login failed due to: " + error.message, {
+                        position: toast.POSITION.TOP_CENTER,
+                    });
+                })
+                .finally(() => {
+                    setIsPending(false);
+                });
+        }
     };
+    
+
+    const validate = () => {
+        let result = true;
+
+        if (email === '' || email == null){
+            console.log("false")
+            result = false;
+            toast.warning('Please enter username', {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            )
+        }
+
+        if (password === '' || email == null){
+            result = false;
+            toast.warning('Please enter username', {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            )
+        }
+
+        return result;
+    }
 
     return ( 
         <div className="login-container">
@@ -62,14 +121,14 @@ const Login = () => {
                     type="text" 
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    required
+                    // required
                     />
                     <p> Password </p>
                     <input 
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    required
+                    // required
 
                     />
                     <br />
@@ -81,6 +140,7 @@ const Login = () => {
                         <a href=""> Forgot Password? </a>
                     </div>
                     <button> {isPending ? 'Logging in...' : 'Login'} </button>
+                    <ToastContainer />
                 </form>    
 
             </div>
