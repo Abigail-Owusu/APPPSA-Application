@@ -4,7 +4,7 @@ from accounts.models import CustomUser
 # Create your models here.
 class Message(models.Model):
     message_id = models.AutoField(primary_key=True)
-    sender = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='sender', blank=True)
+    sender = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='senderr', blank=True)
     receiver = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='receiver', blank=False, null=False)
     text = models.TextField()
     image = models.ImageField(upload_to='message_images/', null=True, blank=True)

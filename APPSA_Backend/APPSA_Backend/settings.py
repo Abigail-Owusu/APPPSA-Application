@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'accounts',
     'discussion',
     'messaging',
+    'payments',
 ]
 
 MIDDLEWARE = [
@@ -162,3 +163,10 @@ SECURE_FRAME_DENY               = False
 # images
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Paystack settings
+PAYSTACK_SECRET_KEY = 'sk_test_f0299f479c72e2c7b8f7615d87b31137634337aa'
+PAYSTACK_PUBLIC_KEY = 'pk_test_f7e0bbcb486a8ce7690b98716caa002e024171f1'
+PAYSTACK_INITIALIZE_URL = 'https://api.paystack.co/transaction/initialize'
+PAYSTACK_CHARGE_URL = 'https://api.paystack.co/transaction/charge'
+PAYMENT_CURRENCY = 'GHS'
