@@ -1,0 +1,149 @@
+.discussion-pg-cont{
+    display: flex;
+}
+
+.page-content{
+    padding: 1rem;
+    padding-top: 1rem;
+    width: 50%;
+    height: 100vh;
+}
+
+.page-content h1{
+    color: #000071;
+    font-style: italic;
+    font-weight: 800;
+}
+
+.discussion-info{
+    /* height: 20vh; */
+    background-color: #F4F4F4;
+    /* padding: 1rem; */
+}
+
+.discussion-info .content{
+    padding: 1rem;
+    border-bottom: 2px solid white;
+    /* display: inline-block; */
+    /* width: 20%; */
+    height: 100%;
+    /* background-color: black; */
+    /* border-bottom: 20px solid white; */
+}
+.discussion-header{
+    display: flex;
+    padding: 0.7rem;
+    /* align-items: center; */
+    border-bottom: 0.2rem solid white;
+    justify-content: flex-end;
+}
+
+.discussion-profile-img{
+    border: 2px solid #FFB800;
+    border-radius: 50%;
+}
+
+.discussion-profile .profile-text h3{
+    color: #000071;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.discussion-profile .profile-text h5{
+    font-size: 1.3rem;
+    margin-top: 0.3rem;
+    color: #FFB800;
+}
+
+.details p{
+    font-size: 0.9rem;
+    font-weight: 400;
+    /* margin: 0;
+    padding: 0; */
+}
+
+.comment-box{
+    /* padding: 1rem; */
+    padding: 1rem 1rem 1rem 1rem;
+}
+
+.comment-box input{
+    padding: 0.5rem;
+    border: none;
+    border-radius: 8px;
+    width: 40%;
+    font-style: italic;
+}
+
+.user-comments{
+    max-height: 50vh;
+    margin-top: 1rem;
+    overflow: auto;
+}
+
+.user-comments .comment-card{
+    background-color: #F4F4F4;
+    padding: 1rem;
+    border-radius: 11px;
+    margin-bottom: 1rem;
+    
+}
+.user-comments .comment-card .comment-profile{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-comments .comment-card .comment-profile{
+    font-size: 1.3rem;
+    margin-top: 0.3rem;
+    color: #FFB800;
+}
+
+.user-comments .comment-card .comment-profile img{
+    height: 4rem;
+}
+
+.user-comments .comment-card .comment-profile .user p{
+    color: black;
+    margin: 0;
+    font-size: 0.9rem;
+    
+}
+
+.user-comments .comment-card .comment-profile .user h5{
+    margin-bottom: 0.5rem;
+    margin: 0;
+    
+}
+
+.user-comments .comment-card p{
+    font-size: 0.9rem;
+}
+
+.comment-img{
+    border: 2px solid #FFB800;
+    border-radius: 50%;
+}
+
+.comment-card .icons{
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.comment-card .icons .likes{
+    display: flex;
+    max-height: 0.5rem;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.comment-card .icons .comments{
+    display: flex;
+    max-height: 1rem;align-items: center;
+    gap: 0.5rem;
+}

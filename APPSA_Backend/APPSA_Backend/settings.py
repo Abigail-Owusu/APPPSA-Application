@@ -29,6 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -54,6 +55,13 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
+]
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000'
 ]
 
 ROOT_URLCONF = "APPSA_Backend.urls"
@@ -170,3 +178,7 @@ PAYSTACK_PUBLIC_KEY = 'pk_test_f7e0bbcb486a8ce7690b98716caa002e024171f1'
 PAYSTACK_INITIALIZE_URL = 'https://api.paystack.co/transaction/initialize'
 PAYSTACK_CHARGE_URL = 'https://api.paystack.co/transaction/charge'
 PAYMENT_CURRENCY = 'GHS'
+
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True

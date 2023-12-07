@@ -1,0 +1,96 @@
+.donationPage-container{
+    display: flex;
+
+}
+
+.donationPage-content{
+    /* border: 1px solid red; */
+    padding: 1rem 1rem 1rem 0rem;
+    margin-top: 3rem;
+    width: 77%;
+    /* background-color: red; */
+}
+
+.donationPage-content h1{
+    text-align: center;
+    color: #000071;
+    font-weight: 800;
+}
+
+.donationPage-content img{
+    margin-bottom: 1rem;
+}
+
+.donation-info{
+    /* border: 1px solid red */
+    height: 40%;
+    width: 70%;
+    margin: auto !important;
+    display: flex;
+    /* margin-top: 1rem; */
+}
+
+.donationPage-progress-circle progress{
+    visibility:hidden;
+    height:0;
+    width:0;
+
+}
+
+.donationPage-progress-circle{
+    /* width: 50%;
+    height: 100%; */
+    min-width: 40%;
+    min-height: 20% !important;
+    /* border: 1px solid red; */
+    
+    border-radius: 50%;
+    background: 
+      radial-gradient(closest-side, white 90%, transparent 70% 100%),
+      conic-gradient(#FFB800 75%, #000071 0);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.donationPage-progress-circle::before {
+    content: "75%";
+    font-size: 5rem;
+    font-weight: 700;
+    color: #000071;
+    font-style: italic;
+    
+}
+
+.donationPage-details{
+    margin-left: 1rem;
+}
+
+.donationPage-details h1{
+    font-style: italic;
+    font-weight: 900;
+    text-align: start;
+}
+
+.donationPage-details h1 span{
+    color: #FFB800;
+}
+
+.donationPage-details h4 span{
+    color: #000071;
+}
+
+.donationPage-details p{
+    font-size: 0.9rem;
+}
+
+.donationPage-details button{
+    padding: 1rem;
+    color: white;
+    border: none;
+    background-color: #000071;
+    font-weight: 700;
+    border-radius: 10px;
+}
