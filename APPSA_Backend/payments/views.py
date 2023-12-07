@@ -103,10 +103,8 @@ def get_currentdonations_in_percentage(request):
     initiative_id = request.query_params.get('initiative_id')
     target_amount = Intiatives.objects.get(intiative_id=initiative_id).total_target_amount
     initative = Intiatives.objects.get(intiative_id=initiative_id)
-    current_amount_dict = Payment.objects.filter(initiative=initative).aggregate(Sum('amount'))
-    current_amount = current_amount_dict.get('amount__sum', 0)
-    print(current_amount)
-    print(target_amount)
+    current_amount_dict = Payment.objects.filter(initiative=initative).aggregate(Sum('amount')) # Get the sum of all payments for this initiative in a dictionary
+    current_amount = current_amount_dict.get('amount__sum', 0)# Get the sum of all payments for this initiative in a dictionary
     return Response({'percentage': (current_amount/target_amount)*100}, status=status.HTTP_200_OK)
     
 

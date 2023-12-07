@@ -68,7 +68,7 @@ def user_login(request):
         if user.check_password(password) and user.email_verified == 1:
             print("User is authenticated")
             token, _ = Token.objects.get_or_create(user=user)
-            return Response({'message': 'Login successful','token': token.key}, status=status.HTTP_200_OK)
+            return Response({'message': 'Login successful','token': token.key, 'email': user.email}, status=status.HTTP_200_OK)
         
         if user.email_verified == 0:
             return Response({'error': 'Please verify your email address to login'}, status=status.HTTP_401_UNAUTHORIZED)
