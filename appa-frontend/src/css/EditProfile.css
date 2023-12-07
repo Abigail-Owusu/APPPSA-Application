@@ -1,0 +1,99 @@
+.editProfile-container{
+    display: flex;
+}
+
+.editProfile-content{
+    margin-top: 3rem;
+    /* padding: 1rem; */
+    width: 53%;
+}
+
+
+.editProfile-content h1{
+    color: #000071;
+    font-weight: 800;
+    font-style: italic;
+    margin-left: 1rem;
+
+}
+
+.editProfile-content .background-photo{
+    background-color: #F7F9F9;
+    height: 30vh;
+    width: 100%;
+}
+
+.editProfile-content .userProfile-photo{
+    /* border: 1px solid red; */
+    background-color: black;
+    width: 11vw;
+    height: 20vh;
+    border-radius: 50%;
+    margin-left: 5rem;
+    margin-top: -5rem;
+    /* margin-top: 5rem; */
+    /* position: fixed;
+    top: 17rem;
+    left: 22rem; */
+}
+
+.edit-input-fields{
+    margin-top: 1rem;
+    /* border: 1px solid red; */
+    padding: 0 4rem;
+}
+
+.edit-input-fields .edit-field-row{
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+.edit-input-fields .edit-field-row .edit-field{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+
+.edit-fields{
+    overflow-y: scroll;
+    max-height: 40%;
+}
+.edit-input-fields .edit-field-row label{
+    font-weight: 700;
+    /* margin-bottom: 1rem; */
+}
+
+.edit-input-fields .edit-field-row label span{
+    color: red;
+}
+
+.edit-input-fields .edit-field-row select{
+    width: 84%;
+    padding: 0.6rem;
+    background-color: #DFDFDF;
+    border: none;
+    border-radius: 7px;
+}
+
+.edit-input-fields .edit-field-row input{
+    width: 80%;
+    padding: 0.6rem;
+    margin: 0 !important;
+    background-color: #DFDFDF;
+    border: none;
+    border-radius: 7px;
+}
+
+.edit-input-fields button{
+    padding: 1rem;
+    width: 20%;
+    color: white;
+    background-color: #000071;
+    font-weight: 700;
+    border: none;
+    border-radius: 7px;
+    margin: auto;
+}
