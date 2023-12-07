@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import logo from '../images/appa_logo.png'
 import svg from '../images/login_svg.png'
 import '../css/login.css';
 import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
+import AuthContext from '../context/AuthProvider';
+import axiosInstance from '../api/axiosInstance';
+import axios from 'axios';
+
+// import axios from 'axios';
+
 
 const Login = () => {
+
+    const {setAuth} = useContext(AuthContext);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -15,7 +23,64 @@ const Login = () => {
 
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+        const credentials = { email, password };
+        try{
+            // console.log({credentials})
+
+            const response = await axiosInstance.post('api/login/', credentials)            
+
+            const accessToken = response?.data.token;
+            const email = response?.data.email;
+            setAuth({email, password, accessToken})
+            toast.success("Login Successful", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 2000,
+                style: {
+                    width: '400px',
+                },
+            });
+            
+            setTimeout(() => {
+                navigate('/discussions');
+            }, 2000);
+            // setEmail('');
+            // setPassword('')
+
+        }
+        catch (err) {
+            console.log({err})
+            if (!err?.response){
+                toast.error("No Server Response", {
+                    position: toast.POSITION.TOP_CENTER,
+                });
+            }
+
+            if (err.response?.status === 404){
+                toast.error("User not found", {
+                    position: toast.POSITION.TOP_CENTER,
+                });
+                
+            }
+
+            else if (err.response?.status === 401){
+                toast.error("Invalid Credentials", {
+                    position: toast.POSITION.TOP_CENTER,
+                });
+            }
+            else{
+                toast.error(err.response, {
+                    position: toast.POSITION.TOP_CENTER,
+                });
+
+            }
+
+        }
+
+    }
+
+    const handleSubmitt = (e) => {
         e.preventDefault();
     
         console.log("Running");

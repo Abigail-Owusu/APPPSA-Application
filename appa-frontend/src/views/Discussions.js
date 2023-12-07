@@ -22,12 +22,7 @@ const Discussions = () => {
                     <DiscussionCard />
 
                     <DiscussionCard />
-
-  
-
                 </div>
-
-
             </div>
             <Messages/>
 
