@@ -20,6 +20,7 @@ import pyodbc
 from dotenv import load_dotenv
 
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -101,12 +102,12 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': '3306',
         
-        # "NAME": os.getenv('db_name'),
-        # "USER": os.getenv('db_user'),
-        # "PASSWORD": os.getenv('db_password'),
-        # "HOST": os.getenv('db_host'),
-        # "PORT": os.getenv('db_port'),
-        # 'client_flags': [mysql.connector.ClientFlag.SSL],
+    #     "NAME": os.getenv('db_name'),
+    #     "USER": os.getenv('db_user'),
+    #     "PASSWORD": os.getenv('db_password'),
+    #     "HOST": os.getenv('db_host'),
+    #     "PORT": os.getenv('db_port'),
+    #     'client_flags': [mysql.connector.ClientFlag.SSL],
     }
 }
 
