@@ -94,6 +94,7 @@ def get_initiatives(request):
     serializer = IntiativesSerializer(initiatives, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_currentdonations_in_percentage(request):
@@ -106,6 +107,31 @@ def get_currentdonations_in_percentage(request):
     current_amount_dict = Payment.objects.filter(initiative=initative).aggregate(Sum('amount')) # Get the sum of all payments for this initiative in a dictionary
     current_amount = current_amount_dict.get('amount__sum', 0)# Get the sum of all payments for this initiative in a dictionary
     return Response({'percentage': (current_amount/target_amount)*100}, status=status.HTTP_200_OK)
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_initiative(request):
+    """
+    Delete an initiative
+    """
+    initiative_id = request.query_params.get('initiative_id')
+    Intiatives.objects.get(intiative_id=initiative_id).delete()
+    return Response({'message': 'Initiative deleted successfully'}, status=status.HTTP_200_OK)
+
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+def update_initiative(request):
+    """
+    Update an initiative
+    """
+    initiative_id = request.query_params.get('initiative_id')
+    initiative = Intiatives.objects.get(intiative_id=initiative_id)
+    serializer = IntiativesSerializer(initiative, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({'message': 'Initiative updated successfully', 'data': serializer.data}, status=status.HTTP_200_OK)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     
 
     
