@@ -4,11 +4,20 @@ import home from '../images/home-icon.png'
 import profile from '../images/profile.png'
 import discussions from '../images/discussions.png'
 import donate from '../images/donate.png'
+import logout from '../images/logout.png'
 import help from '../images/help.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import useAuth from '../hooks/useAuth'
 
 
 const Navbar = () => {
+    const {setAuth} = useAuth();
+    const navigate = useNavigate();
+
+    const logoutFunc = async () => {
+        setAuth({});
+        navigate('/')
+    }
     return ( 
         <div className="nav-box">
             <div className="img-row">
@@ -56,6 +65,17 @@ const Navbar = () => {
                     <Link to='/'> Help </Link>
                 </div>
             </div>
+            
+            <div className="logout-box" onClick={logoutFunc}>
+                <div className="menu-img-box">
+                    <img src={logout} alt="" />
+                </div>
+                
+                <Link> Logout </Link>
+
+            </div>
+            
+
 
         </div> 
     );

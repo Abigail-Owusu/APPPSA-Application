@@ -1,4 +1,5 @@
 import { BrowserRouter, Router, Routes, Route } from 'react-router-dom';
+import RequireAuth from './components/RequireAuth';
 // import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Login from './views/LogIn';
 import SignUp from './views/SignUp';
@@ -16,12 +17,16 @@ function App() {
       <div className="content">
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/discussions" element={<Discussions />} />
           <Route path="/register" element={<SignUp />} />
-          <Route path="/donate" element={<Donations />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/edit-profile" element={<EditProfile />} />
-          <Route path="/donate/:id" element={<DonationPage />} />
+          
+          <Route element={<RequireAuth />}>
+            <Route path="/discussions" element={<Discussions />} />
+            <Route path="/donate" element={<Donations />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/edit-profile" element={<EditProfile />} />
+            <Route path="/donate/:id" element={<DonationPage />} />
+
+          </Route>
 
           {/* <Switch> */}
           {/* <Route exact path="/">
