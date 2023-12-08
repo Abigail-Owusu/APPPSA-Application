@@ -15,6 +15,9 @@ from pathlib import Path
 import certifi
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+import mysql.connector
+import pyodbc
+from dotenv import load_dotenv
 
 
 # Quick-start development settings - unsuitable for production
@@ -88,10 +91,22 @@ WSGI_APPLICATION = "APPSA_Backend.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+load_dotenv()
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.mysql",
+        'NAME': 'appsaDB',
+        'USER': 'abby',
+        'PASSWORD': '6468',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+        
+        # "NAME": os.getenv('db_name'),
+        # "USER": os.getenv('db_user'),
+        # "PASSWORD": os.getenv('db_password'),
+        # "HOST": os.getenv('db_host'),
+        # "PORT": os.getenv('db_port'),
+        # 'client_flags': [mysql.connector.ClientFlag.SSL],
     }
 }
 
