@@ -25,7 +25,7 @@ def comment_on_post(request):
     post = Post.objects.get(pk=request.data.get('post_id'))
     if serializer.is_valid():
         serializer.save(user=request.user)
-        comment = Comment.objects.create(user=request.user, post_id=post, text=request.data.get('text'))
+        # Comment.objects.create(user=request.user, post_id=post, text=request.data.get('text'))
         return Response({'message': f'{first_name} {last_name} commented successfully', 'data': serializer.data}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -68,7 +68,9 @@ def get_posts(request):
     for post in posts:
         serializer = PostSerializer(post).data
         post_comments = Comment.objects.filter(post_id=post.post_id).order_by('-timestamp')
-        comments = CommentSerializer(post_comments, many=True).data
+        comments = []
+        for comment in post_comments:
+            comments.append(comment.text)
         serializer['comments'] = comments
         response.append(serializer)
 
@@ -79,9 +81,18 @@ def get_posts(request):
 @permission_classes([IsAuthenticated])
 def get_post_by_user(request):
     user = request.query_params.get('user')
-    post = Post.objects.filter(user=user).order_by('-timestamp')
-    serializer = PostSerializer(post, many=True)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    response = []
+    posts = Post.objects.filter(user=user).order_by('-timestamp')
+    for post in posts:
+        serializer = PostSerializer(post).data
+        post_comments = Comment.objects.filter(post_id=post.post_id).order_by('-timestamp')
+        comments = []
+        for comment in post_comments:
+            comments.append(comment.text)
+        serializer['comments'] = comments
+
+        response.append(serializer)
+    return Response(response, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
@@ -89,5 +100,10 @@ def get_post_by_user(request):
 def get_post_by_id(request):
     post_id = request.query_params.get('post_id')
     post = Post.objects.get(pk=post_id)
-    serializer = PostSerializer(post)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    serializer = PostSerializer(post).data
+    comments = []
+    post_comments = Comment.objects.filter(post_id=post.post_id).order_by('-timestamp')
+    for comment in post_comments:
+        comments.append(comment.text)
+    serializer['comments'] = comments
+    return Response(serializer, status=status.HTTP_200_OK)
