@@ -10,10 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 import certifi
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+import mysql.connector
+import pyodbc
+from dotenv import load_dotenv
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -28,6 +33,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,11 +43,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    
     'rest_framework',
     'rest_framework.authtoken',
-    # 'rest_framework_simplejwt',
     'accounts',
+    'discussion',
+    'messaging',
+    'payments',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +59,13 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
+]
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000'
 ]
 
 ROOT_URLCONF = "APPSA_Backend.urls"
@@ -78,10 +92,22 @@ WSGI_APPLICATION = "APPSA_Backend.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+load_dotenv()
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.mysql",
+        'NAME': 'appsaDB',
+        'USER': 'abby',
+        'PASSWORD': '6468',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+        
+    #     "NAME": os.getenv('db_name'),
+    #     "USER": os.getenv('db_user'),
+    #     "PASSWORD": os.getenv('db_password'),
+    #     "HOST": os.getenv('db_host'),
+    #     "PORT": os.getenv('db_port'),
+    #     'client_flags': [mysql.connector.ClientFlag.SSL],
     }
 }
 
@@ -157,3 +183,18 @@ CSRF_COOKIE_SECURE              = False
 SECURE_HSTS_SECONDS             = None
 SECURE_HSTS_INCLUDE_SUBDOMAINS  = False
 SECURE_FRAME_DENY               = False
+
+# images
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Paystack settings
+PAYSTACK_SECRET_KEY = 'sk_test_f0299f479c72e2c7b8f7615d87b31137634337aa'
+PAYSTACK_PUBLIC_KEY = 'pk_test_f7e0bbcb486a8ce7690b98716caa002e024171f1'
+PAYSTACK_INITIALIZE_URL = 'https://api.paystack.co/transaction/initialize'
+PAYSTACK_CHARGE_URL = 'https://api.paystack.co/transaction/charge'
+PAYMENT_CURRENCY = 'GHS'
+
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True

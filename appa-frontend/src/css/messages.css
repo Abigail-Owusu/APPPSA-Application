@@ -1,0 +1,117 @@
+body{
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+    overflow: hidden;
+    /* align-self: flex-end; */
+    /* background-color: black; */
+    /* height: 100vh; */
+}
+
+.message-container{
+    position: fixed;
+    padding: 1rem;
+    /* top: 0; */
+    right: 0;
+    border-left: 0.5rem solid #F4F4F4;
+    height: 100vh;
+    /* width: 40vw; */
+    margin-left: 65%;
+}
+
+
+.profile-container{
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.profile-container p{
+    font-weight: 700;
+    color: #FFB800;
+}
+
+.profile-box{
+    background-color: #F4F4F4;
+    border-radius: 50%;
+    display: flex;
+    /* align-items: center;/ */
+    justify-content: center;
+    /* border: 1px solid red; */
+    padding: 0.6rem;
+}
+
+.messages{
+    margin-top: 4rem;
+}
+.messages h1{
+    color: #000071;
+    font-style: italic;
+    font-weight: 800;
+}
+
+.message-card{
+    padding: 0.8rem;
+    width: 23vw;
+    background-color: white;
+    height: 7vh;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    /* justify-content: center; */
+}
+
+.new{
+    background-color: #F7F9F9;
+}
+.message-img{
+    border: 2px solid #FFB800;
+    border-radius: 50%;
+}
+
+.message-card h5{
+    font-weight: 700;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.message-card p{
+    margin: 0;
+    font-size: 0.8rem;
+    color: #5E5F5F;
+}
+
+.msg-content{
+    min-width: 43%;
+    /* border: 1px solid red; */
+}
+
+.msg-info h5{
+    color: #788490;
+}
+
+.msg-info{
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.msg-info span{
+    display: none;
+}
+.new .msg-info span{
+    display: block;
+    color: #000071;
+    font-weight: 900;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.msg-info img{
+    height: 5px;
+    width: 20px;
+}

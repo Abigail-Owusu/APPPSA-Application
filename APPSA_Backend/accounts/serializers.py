@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
                   'email', 'password', 'first_name_next_of_kin', 'last_name_next_of_kin', 'tel_next_of_kin',
                   'year_group1', 'chapter1', 'house1']
         extra_kwargs = {'password': {'write_only': True}}
-
+    
     def create(self, validated_data):
         user = CustomUser(
             title=validated_data['title'],
@@ -40,26 +40,12 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
-# class LoginSerializer(TokenObtainPairSerializer):
-#     email = serializers.EmailField(
-#         max_length=200,
-#         min_length=4, 
-#         required=True, 
-#         help_text='Required. 4-200 characters. Must be a valid email address.'
-#         )
-    
-#     password = serializers.CharField(
-#         label=("Password"),
-#         trim_whitespace=False,
-#         required=True,
-#         help_text='Must contain at least one letter and one number.'
-#         )
-#     # token = serializers.SerializerMethodField("get_token")
-#     class Meta:
-#         model = CustomUser
-#         fields = ['email', 'password']
-#         extra_kwargs = {
-#             'password': {'write_only': True},
-#             'access_token': {'read_only': True},
-#             'refresh_token': {'read_only': True},
-#             }
+class UserProfileUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'other_names', 'middle_name', 'maiden_name', 
+                  'nationality', 'postal_code', 'zip_code', 'city', 'district', 'country', 
+                  'profession', 'profile_picture', 'current_organization', 'dob', 'tel_code', 'telephone', 
+                  'additional_tel', 'first_name_next_of_kin', 'last_name_next_of_kin', 
+                  'tel_next_of_kin', 'year_group1', 'year_group2', 'chapter1', 'chapter2', 
+                  'chapter3', 'house1', 'house2']

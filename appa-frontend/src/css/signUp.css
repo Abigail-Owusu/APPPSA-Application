@@ -1,0 +1,147 @@
+body{
+    font-family: 'Inter', sans-serif;
+}
+
+.sign-up-container{
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+}
+
+.sign-up-container .left{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 45%;
+    
+}
+
+.sign-up-container .right{
+    align-items: center !important;
+    /* border: 1px solid red; */
+    /* border: 1px solid blue; */
+    flex-basis: 55%;
+    /* padding-left: 4%; */
+    height: 100%;
+}
+
+.form-container{
+    /* border: 1px solid red; */
+    height: 100%;
+}
+
+form{
+    max-height: 69%;
+    overflow-y: auto;
+
+}
+.field-data{
+    /* max-height: 65%; */
+    /* border: 1px solid brown; */
+    overflow-y: auto;
+    padding-bottom: 2rem;
+}
+.left h3{
+    font-size: 2rem;
+    margin: 0;
+    font-weight: 800;
+    font-style: italic;
+    color: #000071;
+}
+
+.crest-box{
+    width: 50%;
+}
+.crest-box img{
+    width: 100%;
+    height: 100%;
+}
+
+.login-box{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    align-self: flex-start;
+    margin-left: 25%;
+}
+.login-box > .text{
+    color: #000071;
+    font-weight: 700;
+    font-style: italic;
+    font-size: 20px;
+    text-decoration: none;
+}
+.yellow-arrow{
+    color: #FFB800;
+    font-size: 34px; /* Adjust the font size as needed */
+}
+
+.right h1{
+    font-size: 3.5rem;
+    color: #000071;
+    font-style: italic;
+    margin-bottom: 1rem;
+    
+}
+
+.right h4{
+    color: #FFB800;
+    font-size: 2rem;
+    font-style: italic;
+    margin: 0;
+    /* margin-bottom: 1rem; */
+}
+
+.input-row{
+    display: flex;
+    margin-top: 1rem;
+    /* width: 100%; */
+
+}
+
+.input-row .field{
+    width: 100%;
+    /* border: 1px solid red; */
+}
+
+.sign-up-btn{
+    width: 93%;
+    padding: 1rem;
+    border-radius: 7px;
+    border: none;
+    background-color: #000071;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.input-row .field label{
+    font-weight: 700;
+}
+
+.input-row .field label span{
+    color: red;
+}
+
+.input-row input{
+    margin-top: 0.7rem;
+    padding: 1rem;
+    width: 80%;
+    background-color: #DFDFDF;
+    border: none;
+    border-radius: 7px;
+}
+
+.input-row select{
+    margin-top: 0.7rem;
+    padding: 1rem;
+    width: 87%;
+    background-color: #DFDFDF;
+    border: none;
+    border-radius: 7px;
+}
+
+.input-row input[type="date"]{
+    font-family: 'Inter', sans-serif;
+}

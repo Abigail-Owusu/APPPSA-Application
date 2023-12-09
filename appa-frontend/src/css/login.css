@@ -1,0 +1,139 @@
+.body{
+    font-family: 'Inter', sans-serif;
+}
+
+.login-container{
+    display: flex;
+    height: 100%;
+
+}
+.login-container .left{
+    padding: 2%;
+    flex-basis: 60%;
+    align-items: flex-start!important;
+    justify-content: flex-start!important;
+
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.logo-box{
+    width: 60px;
+    height: 70px;
+    display: flex;
+}
+.logo-box img{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.text-box p{
+    margin: 0;
+    font-size: 80%;
+    font-weight:700;
+    /* border: 1px solid red; */
+}
+.left > h1{
+    color: #000071;
+    font-style: italic;
+    font-size: 45px;
+    margin-top: 12% !important;
+    font-weight: 900;
+}
+
+.left > h5{
+    font-size: 24px;
+    font-weight: 700;
+    font-style: italic;
+    color: #FFB800;
+    margin: 0;
+}
+
+.left > form > p{
+    color: #000071;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+form{
+    width: 100%;
+}
+.left input{
+    background-color: #DFDFDF;
+    padding: 14px;
+    width: 85%;
+    border: none;
+    border-radius: 7px;
+    font-size: 20px;
+}
+
+.left button{
+    /* margin-top: 2%; */
+    background-color: #000071;
+    padding: 20px;
+    width: 88%;
+    color: white;
+    font-weight: 700;
+    border: none;
+    border-radius: 7px;
+    font-size: 16px;
+}
+
+.forgot-box{
+    max-width: 88%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.forgot-box a{
+    text-decoration: none;
+    color: #000071;
+    font-weight: 700;
+}
+.remember-me{
+    display: flex;
+    gap: 7px;
+    align-items: center;
+    width: 200px;
+}
+
+.remember-me p{
+    min-width: 200px;
+    font-weight: 600;
+}
+
+.login-container .right{
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
+    margin-left: 10%;
+    flex-basis: 40% !important;
+    /* border: 1px solid red; */
+    height: 100%;
+    /* border: 1px solid red; */
+}
+.right > h3{
+    color: #000071;
+    font-size: 30px;
+    font-style: italic;
+    max-width: 300px;
+    font-weight: 900;
+}
+
+.svg-container{
+    width: 70%;
+    /* height: 70%; */
+    /* border: solid 1px red; */
+}
+
+.svg-container img{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+
