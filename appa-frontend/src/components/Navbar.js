@@ -11,7 +11,7 @@ import useAuth from '../hooks/useAuth'
 
 
 const Navbar = () => {
-    const {setAuth} = useAuth();
+    const { auth, setAuth } = useAuth();
     const navigate = useNavigate();
 
     const logoutFunc = async () => {
@@ -41,7 +41,7 @@ const Navbar = () => {
                     <div className="menu-img-box">
                         <img src={profile} alt="" />
                     </div>
-                    <Link to='/profile'> Profile </Link>
+                    <Link to={`/profile/${auth.email}`}> Profile </Link>
                 </div>
 
                 <div className="menu-item">
