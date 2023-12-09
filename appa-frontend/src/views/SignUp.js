@@ -1,99 +1,346 @@
 import '../css/signUp.css';
 import logo from '../images/appa_logo.png'
-// import { Link } from 'react-router-dom'
 import { useEffect, useState } from "react";
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axiosInstance from '../api/axiosInstance';
+import { useNavigate } from 'react-router';
+
 
 
 const SignUp = () => {
-    // const [formData, setFormData] = useState({
-    //     "title": "Mr",
-    //     "password": "test", 
-    //     "first_name": "fake",
-    //     "last_name": "fake",
-    //     "nationality": "ghanaian",
-    //     "postal_code":"00233",
-    //     "city": "Kwabenya",
-    //     "district": "Akuapem",
-    //     "country": "Ghana",
-    //     "profession":"Software Engineer",
-    //     "current_organization":"Ashesi",
-    //     "dob":"2000-06-21",
-    //     "tel_code": "+233",
-    //     "telephone": "00000069003123",
-    //     "first_name_next_of_kin": "Valentina",
-    //     "last_name_next_of_kin": "Osei",
-    //     "year_group1":"2024",
-    //     "chapter1": "Accra",
-    //     "house1": "lekane",
-    //     "email": "cyril.kujar@ashesi.edu.gh",
-    //     "tel_next_of_kin":"000000089"
-    //     });
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         title: "",
         password: "", 
         first_name: "",
         last_name: "",
+        other_names: "",
+        middle_name: "",
+        maiden_name: "",
         nationality: "",
         postal_code:"",
+        zip_code: "",
         city: "",
         district: "",
         country: "",
         profession:"",
         current_organization:"",
         dob:"",
-        tel_code: "233",
+        additonal_tel: "",
+        tel_code: "",
         telephone: "",
         first_name_next_of_kin: "",
-        last_name_next_of_kin: "s",
+        last_name_next_of_kin: "",
         year_group1:"",
+        year_group2: "",
         chapter1: "",
+        chapter2: "",
+        chapter3: "",
+        // chapter4: "",
+        // chapter5: "",
         house1: "",
+        house2: "",
         email: "",
-        tel_next_of_kin:""
+        // secondary_email: "",
+        // tel_code_next_of_kin: "",
+        
+        tel_next_of_kin:"",
+        // comments: ""
     });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
-        // console.log(formData.first_name);
       };
 
-      useEffect(()=>{
-        console.log({formData})
-      },[formData])
+    //   useEffect(()=>{
+    //     console.log({formData})
+    //   },[formData])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
-            const response = await fetch("http://127.0.0.1:8000/api/register/", {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json',},
-                body: JSON.stringify(formData),
-            });
+        if (validate()){
+            try{
+                // console.log(formData)
+                const response = await axiosInstance.post('api/register/', JSON.stringify(formData));
+                toast.success("Sign up successful", {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 2000,
+                    style: {
+                        width: '400px',
+                    },
+                }); 
 
-            if (!response.ok){
-                throw new Error('Registration failed');
+                setTimeout(() => {
+                    navigate('/login');
+                }, 2000);
             }
+            catch(error){
+                if (error.response){
+                    if (error.response.data.hasOwnProperty('password')){
+                        const message = error.response.data.password;
+                        toast.error(message[0], {
+                            position: toast.POSITION.TOP_CENTER,
+                            autoClose: 2000,
+                        });
+                    }
 
-            console.log('Registration successful');
+                    else if (error.response.data.hasOwnProperty('email')){
+                        const message = error.response.data.email;
+                        toast.error(message[0], {
+                            position: toast.POSITION.TOP_CENTER,
+                            autoClose: 2000,
+                        });
+                    }
+
+                    else if (error.response.data.hasOwnProperty('telephone')){
+                        const message = error.response.data.telephone;
+                        toast.error(message[0], {
+                            position: toast.POSITION.TOP_CENTER,
+                            autoClose: 2000,
+                        });
+                    }
+
+                    else if (error.response.data.hasOwnProperty('year_group1')){
+                        const message = error.response.data.year_group1;
+                        toast.error(message[0], {
+                            position: toast.POSITION.TOP_CENTER,
+                            autoClose: 2000,
+                        });
+                    }
+
+                    else{
+                        console.log(error.response.data)
+                    }
+
+                }
+
+            }
         }
-        catch(error){
-            console.error('Registration error:', error.message)
-            console.log(formData)
 
-        }
-    };
 
-    const submitForm = () => {
-        // Programmatically submit the form
+
+    }
+
+
+    const submitForm = () => {    
         handleSubmit({
-          preventDefault: () => {}, // Mock the event object with preventDefault method
+          preventDefault: () => {}, 
         });
       };
+    
+    const validate = () => {
+        let result = true;
+        // console.log(formData.first_name);
+
+        if (formData.title === "" || formData.title == null){
+            console.log("false")
+            result = false;
+            toast.warning('Please select a title', {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            )
+        }
+
+        else if (formData.first_name === "" ){
+            result = false;
+            toast.warning('Please enter your first name', {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            );
+        }
+
+        else if (formData.middle_name === '' || formData.middle_name == null){
+            result = false;
+            toast.warning('Please enter your middle name', {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            );
+        }
+
+        else if (formData.last_name === '' || formData.last_name == null){
+            result = false;
+            toast.warning('Please enter your last name', {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            );
+        }
+
+        else if (formData.nationality === '' || formData.nationality == null){
+            result = false;
+            toast.warning('Please select your nationality', {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            );
+        }
+
+        else if (formData.nationality === '' || formData.nationality == null){
+            result = false;
+            toast.warning('Please select your nationality', {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            );
+        }
+
+        else if (formData.postal_code === '' || formData.nationality == null){
+            result = false;
+            toast.warning('Please enter your postal code', {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            );
+        }
+
+        else if (formData.postal_code === '' || formData.postal_code == null){
+            result = false;
+            toast.warning('Please enter your postal code', {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            );
+        }
+
+        else if (formData.zip_code === '' || formData.zip_code == null){
+            result = false;
+            toast.warning('Please enter your zip code', {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            );
+        }
+
+        else if (formData.city === '' || formData.city == null){
+            result = false;
+            toast.warning('Please enter your city', {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            );
+        }
+
+        else if (formData.district === '' || formData.district == null){
+            result = false;
+            toast.warning('Please enter your district', {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            );
+        }
+
+        else if (formData.country === '' || formData.country == null){
+            result = false;
+            toast.warning('Please enter your country', {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            );
+        }
+
+        else if (formData.profession === '' || formData.profession == null){
+            result = false;
+            toast.warning('Please enter your profession', {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            );
+        }
+
+        else if (formData.dob === '' || formData.dob == null){
+            result = false;
+            toast.warning('Please select your date of birth', {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            );
+        }
+
+        else if (formData.tel_code === '' || formData.tel_code == null){
+            result = false;
+            toast.warning('Please enter your telephone code', {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            );
+        }
+
+        else if (formData.telephone === '' || formData.telephone == null){
+            result = false;
+            toast.warning('Please enter your telephone number', {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            );
+        }
+
+        else if (formData.city === '' || formData.city == null){
+            result = false;
+            toast.warning('Please enter your city', {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            );
+        }
+
+        else if (formData.email === '' || formData.email == null){
+            result = false;
+            toast.warning('Please enter your email', {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            );
+        }
+
+        else if (formData.first_name_next_of_kin === '' || formData.first_name_next_of_kin == null){
+            result = false;
+            toast.warning("Please enter your next of kin's first name", {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            );
+        }
+
+        else if (formData.last_name_next_of_kin === '' || formData.last_name_next_of_kin == null){
+            result = false;
+            toast.warning("Please enter your next of kin's last name", {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            );
+        }
+
+
+        else if (formData.tel_next_of_kin === '' || formData.tel_next_of_kin == null){
+            result = false;
+            toast.warning("Please enter your next of kin's telephone number", {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            );
+        }
+
+        else if (formData.year_group1 === '' || formData.year_group1 == null){
+            result = false;
+            toast.warning("Please enter your year group 1", {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            );
+        }
+
+        else if (formData.chapter1 === '' || formData.chapter1 == null){
+            result = false;
+            toast.warning("Please enter your chapter 1", {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            );
+        }
+
+        else if (formData.house1 === '' || formData.house1 == null){
+            result = false;
+            toast.warning("Please enter your house1", {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            );
+        }
+
+        else if (formData.password === '' || formData.password == null){
+            result = false;
+            toast.warning("Please enter your password", {
+                position: toast.POSITION.TOP_CENTER,
+            }
+            );
+        }
+
+        return result;
+    }
     
     return ( 
         <div className="sign-up-container">
@@ -123,7 +370,7 @@ const SignUp = () => {
                                     name="title"
                                     value={formData.title}
                                     onChange={handleChange}
-                                    required
+                                    
                                     >
                                         <option value="Ms">Ms</option>
                                         <option value="Mrs">Mrs</option>
@@ -144,35 +391,63 @@ const SignUp = () => {
                                     placeholder='John'
                                     value={formData.first_name}
                                     onChange={handleChange}
-                                    required
+                                    
                                     />
                                 </div>
                             </div>
 
                             <div className="input-row">
                                 <div className="field">
-                                    <label htmlFor="last_name"> Surname <span> * </span> </label>
+                                    <label htmlFor="last_name"> Middle name <span> * </span> </label>
                                     <br />
                                     <input 
                                     type="text" 
-                                    id='last_name'
-                                    name='last_name'
-                                    placeholder='Doe'
-                                    value={formData.last_name}
+                                    id='middle_name'
+                                    name='middle_name'
+                                    placeholder='Alvin'
+                                    value={formData.middle_name}
                                     onChange={handleChange}
                                     />
                                 </div>
 
                                 <div className="field">
-                                    <label htmlFor="other_name"> Other names (Optional) </label>
+                                    <label htmlFor="other_name"> Surname <span> * </span> </label>
                                     <br />
                                     <input 
                                     type="text" 
-                                    id='other_name'
-                                    name='other_name' 
+                                    id='last_name'
+                                    name='last_name' 
+                                    placeholder='Doe' 
+                                    onChange={handleChange}
+                                    value={formData.last_name}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="input-row">
+                                <div className="field">
+                                    <label htmlFor="last_name"> Maiden name (if applicable) </label>
+                                    <br />
+                                    <input 
+                                    type="text" 
+                                    id='maiden_name'
+                                    name='maiden_name'
+                                    placeholder='Doe'
+                                    value={formData.maiden_name}
+                                    onChange={handleChange}
+                                    />
+                                </div>
+
+                                <div className="field">
+                                    <label htmlFor="other_name"> Other names </label>
+                                    <br />
+                                    <input 
+                                    type="text" 
+                                    id='other_names'
+                                    name='other_names' 
                                     placeholder='Kwesi' 
-                                    // onChange={handleChange}
-                                    // value={formData.other}
+                                    onChange={handleChange}
+                                    value={formData.other_names}
                                     />
                                 </div>
                             </div>
@@ -405,6 +680,8 @@ const SignUp = () => {
                                     type="text" 
                                     id='zip_code'
                                     name='zip_code'
+                                    onChange = {handleChange}
+                                    value = {formData.zip_code}
                                     placeholder='0000'/>
                                 </div>
 
@@ -729,61 +1006,82 @@ const SignUp = () => {
                                     value={formData.dob}
                                     onChange={handleChange}
                                     />
-                                    {/* <DatePicker
-                                        id="birthdate"
-                                        // selected={formData.birthdate}
-                                        // onChange={handleDateChange}
-                                        dateFormat="MM/dd/yyyy"
-                                        showYearDropdown
-                                        placeholderText="Select a date"
-                                        required
-                                    /> */}
+
                                 </div>
 
                                 <div className="field">
-                                    <label htmlFor="telephone"> Telephone No. (Enter country code) <span> * </span> </label>
+                                    <label htmlFor="telephone"> Telephone No. (Country code) <span> * </span> </label>
                                     <br />
                                     <input t
                                     ype="text" 
-                                    id='telephone' 
-                                    placeholder='+233 244718892' 
-                                    name='telephone'
+                                    id='tel_code' 
+                                    placeholder='+233' 
+                                    name='tel_code'
                                     onChange={handleChange}
-                                    value={formData.telephone}
+                                    value={formData.tel_code}
                                     />
                                 </div>
                             </div>
 
                             <div className="input-row">
                                 <div className="field">
-                                    <label htmlFor="additional_number"> Additional Number (If Applicable) </label>
+                                    <label htmlFor="telephone"> Telephone number <span> * </span> </label>
                                     <br />
                                     <input 
                                     type="text" 
-                                    id='additional_number'
-                                    name='additional_number' 
-                                    placeholder='+233 244718892'
+                                    id='telephone'
+                                    name='telephone' 
+                                    placeholder='0244718892'
+                                    onChange={handleChange}
+                                    value={formData.telephone}
 
                                     />
                                 </div>
 
                                 <div className="field">
-                                    <label htmlFor="email"> Email address <span> * </span> </label>
+                                    <label htmlFor="additional_tel"> Additional number </label>
+                                    <br />
+                                    <input 
+                                    type="text" 
+                                    id='additonal_tel' 
+                                    name='additonal_tel'
+                                    placeholder='0244651691' 
+                                    value={formData.additonal_tel}
+                                    onChange={handleChange}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="input-row">
+                                <div className="field">
+                                    <label htmlFor="email"> Email <span> * </span> </label>
                                     <br />
                                     <input 
                                     type="text" 
                                     id='email' 
                                     name='email'
-                                    placeholder='john.doe@gmail.com' 
-                                    value={formData.email}
+                                    placeholder='jane.doe@example.com'
                                     onChange={handleChange}
+                                    value={formData.email}
                                     />
+                                </div>
+
+                                <div className="field">
+                                    <label htmlFor="email">  Secondary email </label>
+                                    <br />
+                                    <input type="text" 
+                                    id='secondary_email' 
+                                    name='secondary_email'
+                                    placeholder='jane.doe@example.com'
+                                    // value={formData.secondary_email}
+                                    // onChange={handleChange}
+                                     />
                                 </div>
                             </div>
 
                             <div className="input-row">
                                 <div className="field">
-                                    <label htmlFor="first_name_next_of_kin"> Name of Next of Kin <span> * </span> </label>
+                                    <label htmlFor="first_name_next_of_kin"> Next of kin first name <span> * </span></label>
                                     <br />
                                     <input 
                                     type="text" 
@@ -796,17 +1094,44 @@ const SignUp = () => {
                                 </div>
 
                                 <div className="field">
-                                    <label htmlFor="tel_next_of_kin"> Next of Kin Contact No. <span> * </span> </label>
+                                    <label htmlFor="last_name_next_of_kin">  Next of kin last name <span> * </span> </label>
                                     <br />
                                     <input type="text" 
-                                    id='tel_next_of_kin' 
-                                    name='tel_next_of_kin'
-                                    placeholder='+233 244718892'
-                                    value={formData.tel_next_of_kin}
+                                    id='last_name_next_of_kin' 
+                                    name='last_name_next_of_kin'
+                                    placeholder='Doe'
+                                    value={formData.last_name_next_of_kin}
                                     onChange={handleChange}
                                      />
                                 </div>
                             </div>
+
+                            <div className="input-row">
+                                <div className="field">
+                                    <label htmlFor="tel_next_kin"> Next of Kin Contact No. (Country Code) <span> * </span> </label>
+                                    <br />
+                                    <input 
+                                    type="text" 
+                                    id='tel_code_next_of_kin' 
+                                    name='tel_code_next_of_kin'
+                                    // value={formData.tel_code_next_of_kin}
+                                    // onChange={handleChange}
+                                    placeholder='+233'/>
+                                </div>
+
+                                <div className="field">
+                                    <label htmlFor="year_group2"> Next of Kin Contact No. <span> * </span> </label>
+                                    <br />
+                                    <input type="text" 
+                                    id='tel_next_of_kin' 
+                                    onChange={handleChange}
+                                    value={formData.tel_next_of_kin}
+                                    name='tel_next_of_kin'
+                                    placeholder='0255181901' />
+                                </div>
+                            </div>
+
+                            
 
                             <div className="input-row">
                                 <div className="field">
@@ -827,7 +1152,10 @@ const SignUp = () => {
                                     <input type="text" 
                                     id='year_group2' 
                                     name='year_group2'
-                                    placeholder='1982' />
+                                    placeholder='1982' 
+                                    onChange={handleChange}
+                                    value={formData.year_group2}
+                                    />
                                 </div>
                             </div>
 
@@ -850,7 +1178,10 @@ const SignUp = () => {
                                     type="text" 
                                     id='chapter2' 
                                     name='chapter2'
-                                    placeholder='UK' />
+                                    placeholder='UK'
+                                    value={formData.chapter2}
+                                    onChange={handleChange}
+                                     />
                                 </div>
                             </div>
 
@@ -862,7 +1193,11 @@ const SignUp = () => {
                                     type="text" 
                                     id='chapter3' 
                                     name='chapter3' 
-                                    placeholder='Takoradi'/>
+                                    placeholder='Takoradi'
+                                    value={formData.chapter3}
+                                    onChange={handleChange}
+
+                                    />
                                 </div>
 
                                 <div className="field">
@@ -872,7 +1207,10 @@ const SignUp = () => {
                                     type="text" 
                                     id='chapter4' 
                                     name='chapter4' 
-                                    placeholder='UK' />
+                                    placeholder='UK'
+                                    // value={formData.chapter4}
+                                    // onChange={handleChange}
+                                     />
                                 </div>
                             </div>
 
@@ -882,7 +1220,9 @@ const SignUp = () => {
                                     <br />
                                     <input type="text" 
                                     id='chapter5' 
-                                    name='chapter5' 
+                                    name='chapter5'
+                                    // value = {formData.chapter5}
+                                    // onChange={handleChange}
                                     placeholder='Takoradi'/>
                                 </div>
 
@@ -893,7 +1233,7 @@ const SignUp = () => {
                                     id='house1'
                                     name='house1' 
                                     placeholder='UK'
-                                    value={formData.value}
+                                    value={formData.house1}
                                     onChange={handleChange}
                                      />
                                 </div>
@@ -906,7 +1246,10 @@ const SignUp = () => {
                                     <input type="text" 
                                     id='house2'
                                     name='house2'
-                                    placeholder='Takoradi'/>
+                                    placeholder='Takoradi'
+                                    value={formData.house2}
+                                    onChange={handleChange}
+                                    />
                                 </div>
 
                                 <div className="field">
@@ -916,7 +1259,10 @@ const SignUp = () => {
                                     type="text" 
                                     id='comments' 
                                     name='comments' 
-                                    placeholder='Comments' />
+                                    placeholder='Comments'
+                                    // onChange={handleChange}
+                                    // value={formData.comments}
+                                     />
                                 </div>
                             </div>
 
@@ -929,13 +1275,19 @@ const SignUp = () => {
                                     id='password' 
                                     name='password' 
                                     onChange={handleChange}
+                                    value={formData.password}
                                     placeholder='***'/>
                                 </div>
 
                                 <div className="field">
                                     <label htmlFor="confirm_password"> Confirm Password <span> * </span> </label>
                                     <br />
-                                    <input type="text" id='confirm_password' name='confirm_password' placeholder='***' />
+                                    <input type="text" 
+                                    id='confirm_password' 
+                                    name='confirm_password' placeholder='***' 
+                                    // value={formData.confirm_password}
+                                    // onChange={handleChange}
+                                    />
                                 </div>
                             </div>
 
@@ -944,6 +1296,7 @@ const SignUp = () => {
                     </form>
                     <div className="input-row">
                         <button className='sign-up-btn' onClick={submitForm}> Sign Up </button>
+                        <ToastContainer />
                     </div>
                 </div>
             </div>
