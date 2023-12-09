@@ -4,6 +4,7 @@ import user_profile from '../images/user_profile.png'
 import donationImage from '../images/donationPage-img.png'
 
 const DonationPage = () => {
+
     return ( 
         <div className="donationPage-container">
             <Navbar />
