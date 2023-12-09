@@ -23,9 +23,11 @@ def comment_on_post(request):
     authenticated_user = request.user.email
     first_name = request.user.first_name
     last_name = request.user.last_name
+    post = Post.objects.get(pk=request.data.get('post_id'))
     auth_user_sliced = authenticated_user.find('@')
     if serializer.is_valid():
         serializer.save(user=request.user)
+        post.comments.add(request.user)
         return Response({'message': f'{first_name} {last_name} commented successfully', 'data': serializer.data}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -49,6 +51,13 @@ def get_number_of_likes(request):
     post_id = request.query_params.get('post_id')
     post = Post.objects.get(pk=post_id)
     return Response({'number_of_likes': post.likes.count()}, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_number_of_comments(request):
+    post_id = request.query_params.get('post_id')
+    post = Post.objects.get(pk=post_id)
+    return Response({'number_of_comments': post.comments.count()}, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
