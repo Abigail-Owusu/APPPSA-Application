@@ -3,9 +3,9 @@ import logo from '../images/appa_logo.png'
 import svg from '../images/login_svg.png'
 import '../css/login.css';
 import { toast, ToastContainer } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
-import AuthContext from '../context/AuthProvider';
+import useAuth from '../hooks/useAuth';
 import axiosInstance from '../api/axiosInstance';
 import axios from 'axios';
 
@@ -14,68 +14,78 @@ import axios from 'axios';
 
 const Login = () => {
 
-    const {setAuth} = useContext(AuthContext);
+    const {setAuth} = useAuth();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isPending, setIsPending] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const [loginError, setLoginError] = useState(false);
 
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/discussions";
+
+    const handleCheckboxChange = () => {
+        setShowPassword(!showPassword);
+    };
 
     const handleSubmit = async(e) => {
         e.preventDefault();
-        const credentials = { email, password };
-        try{
-            // console.log({credentials})
+        if (validate()){
 
-            const response = await axiosInstance.post('api/login/', credentials)            
-
-            const accessToken = response?.data.token;
-            const email = response?.data.email;
-            setAuth({email, password, accessToken})
-            toast.success("Login Successful", {
-                position: toast.POSITION.TOP_CENTER,
-                autoClose: 2000,
-                style: {
-                    width: '400px',
-                },
-            });
-            
-            setTimeout(() => {
-                navigate('/discussions');
-            }, 2000);
-            // setEmail('');
-            // setPassword('')
-
-        }
-        catch (err) {
-            console.log({err})
-            if (!err?.response){
-                toast.error("No Server Response", {
+            const credentials = { email, password };
+            try{
+                // console.log({credentials})
+    
+                const response = await axiosInstance.post('api/login/', credentials)            
+    
+                const accessToken = response?.data.token;
+                const email = response?.data.email;
+                setAuth({email, password, accessToken})
+                toast.success("Login Successful", {
                     position: toast.POSITION.TOP_CENTER,
-                });
-            }
-
-            if (err.response?.status === 404){
-                toast.error("User not found", {
-                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 2000,
+                    style: {
+                        width: '400px',
+                    },
                 });
                 
+                setTimeout(() => {
+                    navigate(from, {replace: true});
+                }, 2000);
+                // setEmail('');
+                // setPassword('')
+    
             }
-
-            else if (err.response?.status === 401){
-                toast.error("Invalid Credentials", {
-                    position: toast.POSITION.TOP_CENTER,
-                });
+            catch (err) {
+                console.log({err})
+                if (!err?.response){
+                    toast.error("No Server Response", {
+                        position: toast.POSITION.TOP_CENTER,
+                    });
+                }
+    
+                if (err.response?.status === 404){
+                    toast.error("User not found", {
+                        position: toast.POSITION.TOP_CENTER,
+                    });
+                    
+                }
+    
+                else if (err.response?.status === 401){
+                    toast.error("Invalid Credentials", {
+                        position: toast.POSITION.TOP_CENTER,
+                    });
+                }
+                else{
+                    toast.error(err.response, {
+                        position: toast.POSITION.TOP_CENTER,
+                    });
+    
+                }
+    
             }
-            else{
-                toast.error(err.response, {
-                    position: toast.POSITION.TOP_CENTER,
-                });
-
-            }
-
         }
 
     }
@@ -83,7 +93,6 @@ const Login = () => {
     const handleSubmitt = (e) => {
         e.preventDefault();
     
-        console.log("Running");
         if (validate()) {
             const credentials = { email, password };
     
@@ -156,7 +165,7 @@ const Login = () => {
 
         if (password === '' || email == null){
             result = false;
-            toast.warning('Please enter username', {
+            toast.warning('Please enter password', {
                 position: toast.POSITION.TOP_CENTER,
             }
             )
@@ -190,7 +199,7 @@ const Login = () => {
                     />
                     <p> Password </p>
                     <input 
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     // required
@@ -199,8 +208,8 @@ const Login = () => {
                     <br />
                     <div className="forgot-box">
                         <div className="remember-me">
-                            <input type="checkbox" />
-                            <p> Remember Me </p>
+                            <input type="checkbox" checked={showPassword} onChange={handleCheckboxChange} />
+                            <p> Show password </p>
                         </div>
                         <a href=""> Forgot Password? </a>
                     </div>
