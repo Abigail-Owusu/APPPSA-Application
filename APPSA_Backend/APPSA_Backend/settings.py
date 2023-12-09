@@ -18,6 +18,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 import mysql.connector
 import pyodbc
 from dotenv import load_dotenv
+from decouple import config
+import pymysql
 
 
 
@@ -93,21 +95,21 @@ WSGI_APPLICATION = "APPSA_Backend.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 load_dotenv()
+# Load environment variables from .env file
+config_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
+# config.read(config_file)
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        'NAME': 'appsaDB',
-        'USER': 'abby',
-        'PASSWORD': '6468',
-        'HOST': '127.0.0.1',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
         'PORT': '3306',
-        
-    #     "NAME": os.getenv('db_name'),
-    #     "USER": os.getenv('db_user'),
-    #     "PASSWORD": os.getenv('db_password'),
-    #     "HOST": os.getenv('db_host'),
-    #     "PORT": os.getenv('db_port'),
-    #     'client_flags': [mysql.connector.ClientFlag.SSL],
+        'OPTIONS': {
+            'ssl': {'ca': './DigiCertGlobalRootCA.crt.pem'}
+        }
+
     }
 }
 
