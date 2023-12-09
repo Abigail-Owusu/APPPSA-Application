@@ -130,7 +130,7 @@ def view_profile(request):
     return Response({'data': serializer.data}, status=status.HTTP_200_OK)
     
 @api_view(['PATCH'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def update_profile(request):
     """
     Update the profile of a user
@@ -141,7 +141,7 @@ def update_profile(request):
         The updated profile of the user
     """
 @api_view(['PATCH'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def edit_profile(request):
     # Retrieve the authenticated user
     authenticated_user = request.user

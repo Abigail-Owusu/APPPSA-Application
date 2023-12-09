@@ -6,12 +6,21 @@ import dsc_profile from '../images/profiles/profile2.png'
 import reply from '../images/reply.png'
 import likes from '../images/likes.png'
 import comments from '../images/comments.png'
+import { useParams } from 'react-router';
+import useFetch from '../hooks/useFetch';
+import useAuth from '../hooks/useAuth';
 
 
 const DiscussionPage = () => {
+    const { post_id } = useParams();
+    const { auth, setAuth} = useAuth();
+    const {data: discussion, error, isPending} = useFetch("http://127.0.0.1:8000/api/posts?post_id=" + post_id, auth.accessToken);
+    // console.log(profile)
     return ( 
+        
         <div className="discussion-pg-cont">
             <Navbar />
+            {isPending && <div> Loading </div>}
             <div className="page-content">
                 <h1> Discussions </h1>
                 <div className="discussion-info">

@@ -6,6 +6,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from '../api/axiosInstance';
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
 
 
@@ -352,7 +353,7 @@ const SignUp = () => {
                 </div>
                 <div className="login-box">
                     <p className="yellow-arrow">&#8594; </p>
-                    <a href="" className='text'> Log In </a>
+                    <Link to={"/login"} className="text">Log In </Link>
                 </div>
             </div>
             <div className="right">
@@ -1067,13 +1068,13 @@ const SignUp = () => {
                                 </div>
 
                                 <div className="field">
-                                    <label htmlFor="email">  Secondary email </label>
+                                    <label htmlFor="email">  Course studied <span> * </span> </label>
                                     <br />
                                     <input type="text" 
-                                    id='secondary_email' 
-                                    name='secondary_email'
-                                    placeholder='jane.doe@example.com'
-                                    // value={formData.secondary_email}
+                                    id='course_studied' 
+                                    name='course_studied'
+                                    placeholder='Science'
+                                    // value={formData.course_studied}
                                     // onChange={handleChange}
                                      />
                                 </div>

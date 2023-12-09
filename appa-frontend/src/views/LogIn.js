@@ -9,12 +9,11 @@ import useAuth from '../hooks/useAuth';
 import axiosInstance from '../api/axiosInstance';
 import axios from 'axios';
 
-// import axios from 'axios';
 
 
 const Login = () => {
 
-    const {setAuth} = useAuth();
+    const { setAuth } = useAuth();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -36,13 +35,13 @@ const Login = () => {
 
             const credentials = { email, password };
             try{
-                // console.log({credentials})
+                
     
                 const response = await axiosInstance.post('api/login/', credentials)            
     
                 const accessToken = response?.data.token;
                 const email = response?.data.email;
-                setAuth({email, password, accessToken})
+                setAuth({email, password, accessToken});
                 toast.success("Login Successful", {
                     position: toast.POSITION.TOP_CENTER,
                     autoClose: 2000,
