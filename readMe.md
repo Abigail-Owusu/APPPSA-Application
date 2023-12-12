@@ -46,4 +46,4 @@ The Paystack API integration is a strategic choice for secure and reliable payme
 
 1. **Clone Repository:**
    ```bash
-   git clone [repository_url]
+   git clone https://github.com/Abigail-Owusu/APPPSA-Application
