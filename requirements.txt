@@ -8,3 +8,5 @@ django-cors-headers
 mysqlclient
 pyodbc 
 python-decouple
+# mysql pkg-config
+pymysql
