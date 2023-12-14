@@ -12,6 +12,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to='post_images/', null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     likes = models.ManyToManyField(CustomUser, related_name='likes', blank=True)
+    
   
 
 class Comment(models.Model):
@@ -20,7 +21,6 @@ class Comment(models.Model):
     text = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
     
-
 
 class Like(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=True)
