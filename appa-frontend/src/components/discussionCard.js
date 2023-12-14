@@ -2,6 +2,10 @@ import dsc_profile_1 from '../images/profiles/profile2.png'
 import likes from '../images/likes.png'
 import comments from '../images/comments.png'
 import { Link } from 'react-router-dom'
+import { useEffect } from 'react';
+import axiosInstance from '../api/axiosInstance';
+import { useState } from 'react';
+import CircularProgress from '@mui/joy/CircularProgress';
 
 
 /**
@@ -10,41 +14,76 @@ import { Link } from 'react-router-dom'
  * @param {Array} props.discussions - An array of discussion objects.
  * @returns {JSX.Element} - The rendered DiscussionCard component.
  */
-const DiscussionCard = ({discussions, handleClick}) => {
+const DiscussionCard = ({ discussions, handleClick }) => {
+
+
+
     // console.log(handleClick)
     const handleNewDiscussion = () => {
         // Perform cancel logic
-    
+
         // Call the onCancelEdit function provided by props
         handleClick();
-      };
-    return ( 
+    };
+
+    const [authorsInfo, setAuthorsInfo] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchAuthorsInfo = async () => {
+            try {
+                const authorsInfoPromises = discussions.map(async (discussion) => {
+                    const response = await axiosInstance.get(`/api/profile?email=${discussion.user}`);
+                    return response.data;
+                });
+
+                const fetchedAuthorsInfo = await Promise.all(authorsInfoPromises);
+                setAuthorsInfo(fetchedAuthorsInfo);
+                setLoading(false); // Set loading to false once authors' information is fetched
+            } catch (error) {
+                console.error('Error fetching authors information:', error);
+                setLoading(false); // Set loading to false in case of an error
+            }
+        };
+
+        fetchAuthorsInfo();
+    }, [discussions]);
+
+    if (loading) {
+        return <div className="loading-bar">
+            <CircularProgress
+                color="primary"
+                determinate={false}
+                size="lg"
+                variant="solid"
+            />
+        </div>
+    }
+    return (
+        // {authorsInfo }
         <div className="discussion-content">
             <div className="discussion-title-row">
                 <h1> Discussions </h1>
-                <button onClick={handleNewDiscussion}>
-                    New Discussion
-                </button>
-
+                <button onClick={handleNewDiscussion}>New Discussion</button>
             </div>
 
             {/* Container for discussion cards */}
             <div className="cards">
-
+                {/* {console.log(authorsInfo)} */}
                 {/* Map through each discussion and create a card */}
-                {discussions.map((discussion) => (
-                    <div className="discussion-card">
-
+                {discussions.map((discussion, index) => (
+                    <div className="discussion-card" key={discussion.post_id}>
                         {/* Link to the detailed view of the discussion */}
                         <Link to={`/discussions/${discussion.post_id}`}>
-                            <h3> {discussion.title} </h3>
+                            <h3>{discussion.title}</h3>
                         </Link>
                         <a href="">
                             <div className="discussion-profile">
                                 <div className="disc-profile-img">
                                     <img src={dsc_profile_1} alt="" />
                                 </div>
-                                <h5> Jane Doe </h5>
+                                {/* Render the author's name based on the user information */}
+                                <h5>{authorsInfo[index]?.data.first_name} {authorsInfo[index]?.data.last_name}</h5>
                             </div>
                             <p> Posted: {discussion.timestamp} </p>
                         </a>
@@ -60,10 +99,9 @@ const DiscussionCard = ({discussions, handleClick}) => {
                         </div>
                     </div>
                 ))}
-
             </div>
         </div>
-     );
+    );
 }
 
 // Exporting the DiscussionCard component

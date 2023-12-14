@@ -51,18 +51,7 @@ const Profile = () => {
 
     // Fetching user profile data from the API using custom hook useFetch
     const { data: profile, error, isPending } = useFetch("http://127.0.0.1:8000/api/profile?email=" + email, auth.accessToken);
-    console.log(profile)
-
-
-
-    // const { setProfile } = useProfile(); // Get the setProfile function from the context
-
-    // // Call setProfile when the profile data is available
-    // useEffect(() => {
-    //   if (profile) {
-    //     setProfile(profile);
-    //   }
-    // }, [profile, setProfile]);
+    console.log(profile);
 
 
 
