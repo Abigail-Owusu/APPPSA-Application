@@ -10,14 +10,23 @@ import { Link, useNavigate } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 
 
+/**
+ * Navbar component represents the navigation bar of the application.
+ * @returns {JSX.Element} - The rendered Navbar component.
+ */
 const Navbar = () => {
     const { auth, setAuth } = useAuth();
     const navigate = useNavigate();
 
+    /**
+     * Handles the logout functionality.
+     */
     const logoutFunc = async () => {
         setAuth({});
         navigate('/')
     }
+
+    // Rendering the component
     return ( 
         <div className="nav-box">
             <div className="img-row">
@@ -81,4 +90,5 @@ const Navbar = () => {
     );
 }
  
+// Exporting the component for use in other files
 export default Navbar;

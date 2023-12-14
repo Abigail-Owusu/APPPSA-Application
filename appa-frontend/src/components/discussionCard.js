@@ -3,13 +3,39 @@ import likes from '../images/likes.png'
 import comments from '../images/comments.png'
 import { Link } from 'react-router-dom'
 
-const DiscussionCard = ({discussions}) => {
+
+/**
+ * DiscussionCard component displays a list of discussions.
+ * @param {Object} props - The component properties.
+ * @param {Array} props.discussions - An array of discussion objects.
+ * @returns {JSX.Element} - The rendered DiscussionCard component.
+ */
+const DiscussionCard = ({discussions, handleClick}) => {
+    // console.log(handleClick)
+    const handleNewDiscussion = () => {
+        // Perform cancel logic
+    
+        // Call the onCancelEdit function provided by props
+        handleClick();
+      };
     return ( 
         <div className="discussion-content">
-            <h1> Discussions </h1>
+            <div className="discussion-title-row">
+                <h1> Discussions </h1>
+                <button onClick={handleNewDiscussion}>
+                    New Discussion
+                </button>
+
+            </div>
+
+            {/* Container for discussion cards */}
             <div className="cards">
+
+                {/* Map through each discussion and create a card */}
                 {discussions.map((discussion) => (
                     <div className="discussion-card">
+
+                        {/* Link to the detailed view of the discussion */}
                         <Link to={`/discussions/${discussion.post_id}`}>
                             <h3> {discussion.title} </h3>
                         </Link>
@@ -39,5 +65,6 @@ const DiscussionCard = ({discussions}) => {
         </div>
      );
 }
- 
+
+// Exporting the DiscussionCard component
 export default DiscussionCard;

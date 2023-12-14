@@ -1,13 +1,22 @@
+// Importing necessary components and styles for the DonationPage
 import Navbar from '../components/Navbar';
 import '../css/DonationPage.css'
 import user_profile from '../images/user_profile.png'
 import donationImage from '../images/donationPage-img.png'
 
-const DonationPage = () => {
 
+/**
+ * Component representing the Donation detail page.
+ * @returns {JSX.Element} React component
+ */
+const DonationPage = () => {
+    // Rendering the component
     return ( 
         <div className="donationPage-container">
+            {/* Navbar component for navigation */}
             <Navbar />
+
+            {/* User profile section */}
             <div className="profile-container">
                 <p> Jonathon Davis </p>
                 <div className="profile-box">
@@ -16,6 +25,7 @@ const DonationPage = () => {
 
             </div>
 
+            {/* Main content of the donation page */}
             <div className="donationPage-content">
                 <h1> Renovation of Patrick Nutor Research Building </h1>
                 <img src={donationImage} alt="" />
@@ -42,4 +52,5 @@ const DonationPage = () => {
      );
 }
  
+// Exporting the component for use in other files
 export default DonationPage;

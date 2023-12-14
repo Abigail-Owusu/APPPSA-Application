@@ -3,6 +3,11 @@ import user_profile from '../images/user_profile.png'
 import info from '../images/info.png'
 import { Link } from 'react-router-dom'
 
+
+/**
+ * DonationCard component displays a card with information about a donation initiative.
+ * @returns {JSX.Element} - The rendered DonationCard component.
+ */
 const DonationCard = () => {
     return ( 
     
@@ -32,5 +37,6 @@ const DonationCard = () => {
 
      );
 }
- 
+
+// Exporting the DonationCard component
 export default DonationCard;

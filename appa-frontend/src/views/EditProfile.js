@@ -1,14 +1,111 @@
+// Importing necessary components and styles for the EditProfile page
 import Navbar from '../components/Navbar';
 import Messages from '../components/Messages';
 import '../css/EditProfile.css'
+import { useProfile } from '../context/ProfileContext';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import axiosInstance from '../api/axiosInstance';
+import { toast, ToastContainer } from 'react-toastify';
+// import { data, error, isPending } from '../views/Profile'
 
-const EditProfile = () => {
+/**
+ * Component representing the Edit Profile Page.
+ * @returns {JSX.Element} React component
+ */
+const EditProfile = ({ profileData, onSaveChanges, onCancelEdit }) => {
+    const [formData, setFormData] = useState({
+        // Define form fields with their initial values
+        title: profileData.data.title || "",
+        // password: "", 
+        first_name: profileData.data.first_name || "",
+        last_name: profileData.data.last_name || "",
+        other_names: profileData.data.other_names || "",
+        middle_name: profileData.data.middle_name || "",
+        maiden_name: profileData.data.maiden_name || "",
+        nationality: profileData.data.nationality || "",
+        postal_code: profileData.data.postal_code || "",
+        zip_code: profileData.data.zip_code || "",
+        city: profileData.data.city || "",
+        district:  profileData.data.district || "",
+        country:  profileData.data.country|| "",
+        profession:  profileData.data.profession || "",
+        current_organization:  profileData.data.current_organization || "",
+        dob:  profileData.data.dob || "",
+        additonal_tel: profileData.data.additional_tel || "",
+        tel_code: profileData.data.tel_code || "",
+        telephone: profileData.data.telephone || "",
+        first_name_next_of_kin: profileData.data.first_name_next_of_kin || "",
+        last_name_next_of_kin: profileData.data.last_name_next_of_kin || "",
+        year_group1:profileData.data.year_group1|| "",
+        year_group2: profileData.data.year_group2 || "",
+        chapter1: profileData.data.chapter1 || "",
+        chapter2: profileData.data.chapter2 || "",
+        chapter3: profileData.data.chapter3 || "",
+        chapter4: profileData.data.chapter4 || "",
+        chapter5: profileData.data.chapter5 || "",
+        house1: profileData.data.house1 || "",
+        house2: profileData.data.house2|| "",
+        email: profileData.data.email || "",
+        course_studied: profileData.data.course_studied || "",
+        tel_code_next_of_kin: profileData.data.tel_code_next_of_kin || "",    
+        tel_next_of_kin: profileData.data.tel_next_of_kin || "",
+   
+    });
+
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+      };
+
+    useEffect(()=>{
+        console.log({formData})
+      },[formData])
+
+    const handleSave = async(e) => {
+        e.preventDefault();
+        // Perform save logic
+
+        try{
+            const response = await axiosInstance.patch('api/profile/edit?email=' + formData.email, formData);
+
+            toast.success("Profile Updated", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 2000,
+                style: {
+                    width: '400px',
+                },
+            });
+
+            setTimeout(() => {
+                onSaveChanges();
+            }, 2000);
+        }
+
+        catch(err){
+            console.log(err?.response?.data)
+        }
+        
+      };
+    
+      const handleCancel = () => {
+        // Perform cancel logic
+    
+        // Call the onCancelEdit function provided by props
+        onCancelEdit();
+      };
+    // Rendering the component
     return ( 
-        <div className="editProfile-container">
-            <Navbar />
 
+
+            // {/* Main content of the Edit Profile page */}
             <div className="editProfile-content">
-                <h1> Edit Profile </h1>
+                <div className="edit-title-row">
+                    <h1> Edit Profile </h1>
+                    <button onClick={handleCancel}> Back </button>
+
+                </div>
 
                 <div className="edit-fields">
                     <div className="background-photo">
@@ -16,18 +113,18 @@ const EditProfile = () => {
                     </div>
                     <div className="userProfile-photo">
                     </div>
-                    <form>
-                        <div className="edit-input-fields">
+                    <form onSubmit={handleSave}>
+                        <div className="edit-input-fields">   
                             <div className="edit-field-row">
                                 <div className="edit-field">
-                                    <label htmlFor="title"> Title </label>
-                                    {/* <br /> */}
+                                    <label htmlFor="fname"> Title <span> * </span> </label>
+                                    <br />
                                     <select 
                                     id="title" 
                                     name="title"
-                                    // value={formData.title}
-                                    // onChange={handleChange}
-                                    required
+                                    value={formData.title}
+                                    onChange={handleChange}
+                                    
                                     >
                                         <option value="Ms">Ms</option>
                                         <option value="Mrs">Mrs</option>
@@ -40,52 +137,84 @@ const EditProfile = () => {
 
                                 <div className="edit-field">
                                     <label htmlFor="last_name"> First names <span> * </span> </label>
-                                        <input 
-                                        type="text" 
-                                        id='fist_name' 
-                                        name='first_name'
-                                        placeholder='John'
-                                        // value={formData.first_name}
-                                        // onChange={handleChange}
-                                        required
-                                        />
+                                    <br />
+                                    <input 
+                                    type="text" 
+                                    id='fist_name' 
+                                    name='first_name'
+                                    placeholder='John'
+                                    value={formData.first_name}
+                                    onChange={handleChange}
+                                    
+                                    />
                                 </div>
                             </div>
 
                             <div className="edit-field-row">
                                 <div className="edit-field">
-                                    <label htmlFor="last_name"> Surname <span> * </span> </label>
+                                    <label htmlFor="last_name"> Middle name <span> * </span> </label>
+                                    <br />
+                                    <input 
+                                    type="text" 
+                                    id='middle_name'
+                                    name='middle_name'
+                                    placeholder='Alvin'
+                                    value={formData.middle_name}
+                                    onChange={handleChange}
+                                    />
+                                </div>
+
+                                <div className="edit-field">
+                                    <label htmlFor="other_name"> Surname <span> * </span> </label>
+                                    <br />
                                     <input 
                                     type="text" 
                                     id='last_name'
-                                    name='last_name'
-                                    placeholder='Doe'
-                                    // value={formData.last_name}
-                                    // onChange={handleChange}
-                                    />
-
-                                </div>
-
-                                <div className="edit-field">
-                                    <label htmlFor="other_name"> Other names (Optional) </label>
-                                    <input 
-                                    type="text" 
-                                    id='other_name'
-                                    name='other_name' 
-                                    placeholder='Kwesi' 
-                                    // onChange={handleChange}
-                                    // value={formData.other}
+                                    name='last_name' 
+                                    placeholder='Doe' 
+                                    onChange={handleChange}
+                                    value={formData.last_name}
                                     />
                                 </div>
                             </div>
+
+                            <div className="edit-field-row">
+                                <div className="edit-field">
+                                    <label htmlFor="last_name"> Maiden name (if applicable) </label>
+                                    <br />
+                                    <input 
+                                    type="text" 
+                                    id='maiden_name'
+                                    name='maiden_name'
+                                    placeholder='Doe'
+                                    value={formData.maiden_name}
+                                    onChange={handleChange}
+                                    />
+                                </div>
+
+                                <div className="edit-field">
+                                    <label htmlFor="other_name"> Other names </label>
+                                    <br />
+                                    <input 
+                                    type="text" 
+                                    id='other_names'
+                                    name='other_names' 
+                                    placeholder='Kwesi' 
+                                    onChange={handleChange}
+                                    value={formData.other_names}
+                                    />
+                                </div>
+                            </div>
+
                             <div className="edit-field-row">
                                 <div className="edit-field">
                                     <label htmlFor="nationality"> Nationality <span> * </span> </label>
+                                    <br />
                                     <select 
                                     name="nationality"
                                     id='nationality'
-                                    // value={formData.nationality}
-                                    // onChange={handleChange}
+                                    value={formData.nationality}
+                                    onChange={handleChange}
                                     >
                                         {/* <option value="">-- select one --</option> */}
                                         <option value="afghan">Afghan</option>
@@ -285,13 +414,14 @@ const EditProfile = () => {
 
                                 <div className="edit-field">
                                     <label htmlFor="postal_code"> Address (Postal Code) <span> * </span> </label>
+                                    <br />
                                     <input 
                                     type="text" 
                                     id='postal_code' 
                                     name='postal_code'
                                     placeholder='10001'
-                                    // value={formData.postal_code} 
-                                    // onChange={handleChange}
+                                    value={formData.postal_code} 
+                                    onChange={handleChange}
                                     />
                                 </div>
                             </div>
@@ -299,21 +429,25 @@ const EditProfile = () => {
                             <div className="edit-field-row">
                                 <div className="edit-field">
                                     <label htmlFor="zip_code"> Address (zip code) <span> * </span> </label>
+                                    <br />
                                     <input 
                                     type="text" 
                                     id='zip_code'
                                     name='zip_code'
+                                    onChange = {handleChange}
+                                    value = {formData.zip_code}
                                     placeholder='0000'/>
                                 </div>
 
                                 <div className="edit-field">
                                     <label htmlFor="city"> Address (City/Town) <span> * </span> </label>
+                                    <br />
                                     <input type="text" 
                                     id='city' 
                                     name='city'
                                     placeholder='Greater Accra'
-                                    // value={formData.city}
-                                    // onChange={handleChange} 
+                                    value={formData.city}
+                                    onChange={handleChange} 
                                     />
                                 </div>
                             </div>
@@ -321,22 +455,24 @@ const EditProfile = () => {
                             <div className="edit-field-row">
                                 <div className="edit-field">
                                     <label htmlFor="district"> Address (District) <span> * </span> </label>
+                                    <br />
                                     <input type="text" 
                                     id='district'
                                     name='district'
                                     placeholder='Accra'
-                                    // value={formData.district}
-                                    // onChange={handleChange}
+                                    value={formData.district}
+                                    onChange={handleChange}
                                     />
                                 </div>
 
                                 <div className="edit-field">
                                     <label htmlFor="country"> Address (Country) <span> * </span> </label>
+                                    <br />
                                     <select 
                                     id="country" 
                                     name="country"
-                                    // value={formData.country}
-                                    // onChange={handleChange}
+                                    value={formData.country}
+                                    onChange={handleChange}
                                     >
                                         <option value="Afghanistan">Afghanistan</option>
                                         <option value="Åland Islands">Åland Islands</option>
@@ -588,25 +724,27 @@ const EditProfile = () => {
                             <div className="edit-field-row">
                                 <div className="edit-field">
                                     <label htmlFor="profession"> Profession <span> * </span> </label>
+                                    <br />
                                     <input 
                                     type="text" 
                                     id='profession'
                                     name='profession'
                                     placeholder='Lawyer'
-                                    // value={formData.profession}
-                                    // onChange={handleChange}
+                                    value={formData.profession}
+                                    onChange={handleChange}
                                     />
                                 </div>
 
                                 <div className="edit-field">
                                     <label htmlFor="lname"> Current Organization (If Applicable) </label>
+                                    <br />
                                     <input 
                                     type="text" 
                                     id='current_organization' 
                                     name='current_organization'
                                     placeholder='Kwesi' 
-                                    // value={formData.current_organization}
-                                    // onChange={handleChange}
+                                    value={formData.current_organization}
+                                    onChange={handleChange}
                                     />
                                 </div>
                             </div>
@@ -614,73 +752,82 @@ const EditProfile = () => {
                             <div className="edit-field-row">
                                 <div className="edit-field">
                                     <label htmlFor="dob"> Date of Birth <span> * </span> </label>
+                                    <br />
                                     <input 
                                     type="date" 
                                     id='dob'
                                     name='dob'
-                                    // value={formData.dob}
-                                    // onChange={handleChange}
+                                    value={formData.dob}
+                                    onChange={handleChange}
                                     />
+
                                 </div>
 
                                 <div className="edit-field">
-                                    <label htmlFor="telephone"> Telephone No. (Enter country code) <span> * </span> </label>
+                                    <label htmlFor="telephone"> Telephone No. (Country code) <span> * </span> </label>
+                                    <br />
                                     <input t
                                     ype="text" 
-                                    id='telephone' 
-                                    placeholder='+233 244718892' 
-                                    name='telephone'
-                                    // onChange={handleChange}
-                                    // value={formData.telephone}
+                                    id='tel_code' 
+                                    placeholder='+233' 
+                                    name='tel_code'
+                                    onChange={handleChange}
+                                    value={formData.tel_code}
                                     />
                                 </div>
                             </div>
 
                             <div className="edit-field-row">
                                 <div className="edit-field">
-                                        <label htmlFor="additional_number"> Additional Number (If Applicable) </label>
-                                        <input 
-                                        type="text" 
-                                        id='additional_number'
-                                        name='additional_number' 
-                                        placeholder='+233 244718892'
-                                        />
+                                    <label htmlFor="telephone"> Telephone number <span> * </span> </label>
+                                    <br />
+                                    <input 
+                                    type="text" 
+                                    id='telephone'
+                                    name='telephone' 
+                                    placeholder='0244718892'
+                                    onChange={handleChange}
+                                    value={formData.telephone}
+
+                                    />
                                 </div>
 
                                 <div className="edit-field">
-                                    <label htmlFor="email"> Email address <span> * </span> </label>
+                                    <label htmlFor="additional_tel"> Additional number </label>
+                                    <br />
+                                    <input 
+                                    type="text" 
+                                    id='additonal_tel' 
+                                    name='additonal_tel'
+                                    placeholder='0244651691' 
+                                    value={formData.additonal_tel}
+                                    onChange={handleChange}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="edit-field-row">
+                                <div className="edit-field">
+                                    <label htmlFor="email"> Email <span> * </span> </label>
+                                    <br />
                                     <input 
                                     type="text" 
                                     id='email' 
                                     name='email'
-                                    placeholder='john.doe@gmail.com' 
-                                    disabled
-                                    // value={formData.email}
-                                    // onChange={handleChange}
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="edit-field-row">
-                                <div className="edit-field">
-                                    <label htmlFor="first_name_next_of_kin"> Name of Next of Kin <span> * </span> </label>
-                                    <input 
-                                    type="text" 
-                                    id='first_name_next_of_kin' 
-                                    name='first_name_next_of_kin'
-                                    placeholder='John'
-                                    // onChange={handleChange}
-                                    // value={formData.first_name_next_of_kin}
+                                    placeholder='jane.doe@example.com'
+                                    onChange={handleChange}
+                                    value={formData.email}
                                     />
                                 </div>
 
                                 <div className="edit-field">
-                                    <label htmlFor="tel_next_of_kin"> Next of Kin Contact No. <span> * </span> </label>
+                                    <label htmlFor="email">  Course studied <span> * </span> </label>
+                                    <br />
                                     <input type="text" 
-                                    id='tel_next_of_kin' 
-                                    name='tel_next_of_kin'
-                                    placeholder='+233 244718892'
-                                    // value={formData.tel_next_of_kin}
+                                    id='course_studied' 
+                                    name='course_studied'
+                                    placeholder='Science'
+                                    // value={formData.course_studied}
                                     // onChange={handleChange}
                                      />
                                 </div>
@@ -688,120 +835,205 @@ const EditProfile = () => {
 
                             <div className="edit-field-row">
                                 <div className="edit-field">
+                                    <label htmlFor="first_name_next_of_kin"> Next of kin first name <span> * </span></label>
+                                    <br />
+                                    <input 
+                                    type="text" 
+                                    id='first_name_next_of_kin' 
+                                    name='first_name_next_of_kin'
+                                    placeholder='John'
+                                    onChange={handleChange}
+                                    value={formData.first_name_next_of_kin}
+                                    />
+                                </div>
+
+                                <div className="edit-field">
+                                    <label htmlFor="last_name_next_of_kin">  Next of kin last name <span> * </span> </label>
+                                    <br />
+                                    <input type="text" 
+                                    id='last_name_next_of_kin' 
+                                    name='last_name_next_of_kin'
+                                    placeholder='Doe'
+                                    value={formData.last_name_next_of_kin}
+                                    onChange={handleChange}
+                                     />
+                                </div>
+                            </div>
+
+                            <div className="edit-field-row">
+                                <div className="edit-field">
+                                    <label htmlFor="tel_next_kin"> Next of Kin Contact (Country Code) <span> * </span> </label>
+                                    <br />
+                                    <input 
+                                    type="text" 
+                                    id='tel_code_next_of_kin' 
+                                    name='tel_code_next_of_kin'
+                                    // value={formData.tel_code_next_of_kin}
+                                    // onChange={handleChange}
+                                    placeholder='+233'/>
+                                </div>
+
+                                <div className="edit-field">
+                                    <label htmlFor="year_group2"> Next of Kin Contact No. <span> * </span> </label>
+                                    <br />
+                                    <input type="text" 
+                                    id='tel_next_of_kin' 
+                                    onChange={handleChange}
+                                    value={formData.tel_next_of_kin}
+                                    name='tel_next_of_kin'
+                                    placeholder='0255181901' />
+                                </div>
+                            </div>
+
+                            
+
+                            <div className="edit-field-row">
+                                <div className="edit-field">
                                     <label htmlFor="year_group1"> Year group 1 (eg. 1980) <span> * </span> </label>
+                                    <br />
                                     <input 
                                     type="text" 
                                     id='year_group1' 
                                     name='year_group1'
-                                    // value={formData.year_group1}
-                                    // onChange={handleChange}
+                                    value={formData.year_group1}
+                                    onChange={handleChange}
                                     placeholder='1980'/>
                                 </div>
 
                                 <div className="edit-field">
                                     <label htmlFor="year_group2"> Year group 2 (eg. 1982) <span> * </span> </label>
+                                    <br />
                                     <input type="text" 
                                     id='year_group2' 
                                     name='year_group2'
-                                    placeholder='1982' />
+                                    placeholder='1982' 
+                                    onChange={handleChange}
+                                    value={formData.year_group2}
+                                    />
                                 </div>
                             </div>
 
                             <div className="edit-field-row">
                                 <div className="edit-field">
                                     <label htmlFor="chapter1"> Chapter 1 (eg. Accra) <span> * </span> </label>
+                                    <br />
                                     <input type="text" 
                                     id='chapter1' 
                                     name='chapter1' 
                                     placeholder='Accra'
-                                    // value={formData.chapter1}
-                                    // onChange={handleChange}/>
-                                    />
+                                    value={formData.chapter1}
+                                    onChange={handleChange}/>
                                 </div>
 
                                 <div className="edit-field">
                                     <label htmlFor="chapter2"> Chapter 2 (eg. UK) <span> * </span> </label>
+                                    <br />
                                     <input 
                                     type="text" 
                                     id='chapter2' 
                                     name='chapter2'
-                                    placeholder='UK' />
+                                    placeholder='UK'
+                                    value={formData.chapter2}
+                                    onChange={handleChange}
+                                     />
                                 </div>
                             </div>
 
                             <div className="edit-field-row">
                                 <div className="edit-field">
                                     <label htmlFor="chapter3"> Chapter 3 (eg. Takoradi) <span> * </span> </label>
+                                    <br />
                                     <input 
                                     type="text" 
                                     id='chapter3' 
                                     name='chapter3' 
-                                    placeholder='Takoradi'/>
+                                    placeholder='Takoradi'
+                                    value={formData.chapter3}
+                                    onChange={handleChange}
+
+                                    />
                                 </div>
 
                                 <div className="edit-field">
                                     <label htmlFor="chapter4"> Chapter 4 <span> * </span> </label>
+                                    <br />
                                     <input 
                                     type="text" 
                                     id='chapter4' 
                                     name='chapter4' 
-                                    placeholder='UK' />
+                                    placeholder='UK'
+                                    // value={formData.chapter4}
+                                    // onChange={handleChange}
+                                     />
                                 </div>
                             </div>
 
                             <div className="edit-field-row">
                                 <div className="edit-field">
                                     <label htmlFor="chapter5"> Chapter 5 <span> * </span> </label>
+                                    <br />
                                     <input type="text" 
                                     id='chapter5' 
-                                    name='chapter5' 
+                                    name='chapter5'
+                                    // value = {formData.chapter5}
+                                    // onChange={handleChange}
                                     placeholder='Takoradi'/>
                                 </div>
 
                                 <div className="edit-field">
                                     <label htmlFor="house1"> House 1 (eg. Jude) <span> * </span> </label>
+                                    <br />
                                     <input type="text" 
                                     id='house1'
                                     name='house1' 
                                     placeholder='UK'
-                                    // value={formData.value}
-                                    // onChange={handleChange}
+                                    value={formData.house1}
+                                    onChange={handleChange}
                                      />
                                 </div>
-           
                             </div>
 
                             <div className="edit-field-row">
                                 <div className="edit-field">
                                     <label htmlFor="house2"> House 2 (eg. Louis) <span> * </span> </label>
+                                    <br />
                                     <input type="text" 
                                     id='house2'
                                     name='house2'
-                                    placeholder='Takoradi'/>
+                                    placeholder='Takoradi'
+                                    value={formData.house2}
+                                    onChange={handleChange}
+                                    />
                                 </div>
+
                             </div>
 
                             <div className="edit-field-row">
                                 <button> Edit </button>
-
                             </div>
+                            <ToastContainer />
 
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+
+
+                            <br />
+                            <br />
+                            <br />
+                            <br />
 
                         </div>
-                            
 
-                        
                     </form>
 
                 </div>
 
             </div>
 
-            <Messages />
-
-
-        </div> 
     );
 }
- 
+
+// Exporting the component for use in other files
 export default EditProfile;

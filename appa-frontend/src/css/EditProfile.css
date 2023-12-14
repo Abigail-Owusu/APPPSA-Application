@@ -17,6 +17,22 @@
 
 }
 
+.edit-title-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 2rem;
+}
+
+.edit-title-row button{
+    background-color: #000071;
+    color: white;
+    font-weight: 700;
+    border-radius: 10px;
+    border: none;
+
+}
+
 .editProfile-content .background-photo{
     background-color: #F7F9F9;
     height: 30vh;
@@ -39,6 +55,7 @@
 
 .edit-input-fields{
     margin-top: 1rem;
+    margin-bottom: 7rem;
     /* border: 1px solid red; */
     padding: 0 4rem;
 }
@@ -53,7 +70,7 @@
     width: 50%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    /* gap: 10px; */
 
 }
 
