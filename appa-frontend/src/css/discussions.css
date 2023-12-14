@@ -95,3 +95,19 @@
     gap: 0.6rem;
     
 }
+
+.discussion-title-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* background-color: #000071; */
+
+}
+
+.discussion-title-row button{
+    background-color: #000071;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+}

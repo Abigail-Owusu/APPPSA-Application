@@ -42,6 +42,17 @@
     /* margin-right: auto; */
 }
 
+#editProfile-btn a{
+    /* margin-top: 1rem; */
+    /* padding: 1rem; */
+    color: white;
+    font-weight: 700;
+    text-decoration: none;
+    /* border-radius: 10px; */
+    /* border: none; */
+    /* margin-right: auto; */
+}
+
 .user-details{
     border-bottom: 1px solid #DFDFDF;
     padding: 0 1rem 0 5rem;

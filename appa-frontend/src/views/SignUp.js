@@ -1,3 +1,4 @@
+// Importing necessary React components, styles, and external libraries
 import '../css/signUp.css';
 import logo from '../images/appa_logo.png'
 import { useEffect, useState } from "react";
@@ -9,11 +10,14 @@ import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 
 
-
+// Main functional component representing the SignUp page
 const SignUp = () => {
+    // React Router hook for navigation
     const navigate = useNavigate();
 
+    // State variable for form data
     const [formData, setFormData] = useState({
+        // Define form fields with their initial values
         title: "",
         password: "", 
         first_name: "",
@@ -52,6 +56,10 @@ const SignUp = () => {
         // comments: ""
     });
 
+    /**
+     * Function to handle form field changes
+     * @param {*} e 
+     */
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -61,13 +69,19 @@ const SignUp = () => {
     //     console.log({formData})
     //   },[formData])
 
+    /**
+     * // Function to handle form submission and make API request
+     * @param {*} e 
+     */
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (validate()){
             try{
-                // console.log(formData)
+                // Making a POST request to the register API endpoint with form data
                 const response = await axiosInstance.post('api/register/', JSON.stringify(formData));
+
+                // Displaying success toast message
                 toast.success("Sign up successful", {
                     position: toast.POSITION.TOP_CENTER,
                     autoClose: 2000,
@@ -75,12 +89,14 @@ const SignUp = () => {
                         width: '400px',
                     },
                 }); 
-
+                
+                // Navigating to the login page after a delay
                 setTimeout(() => {
                     navigate('/login');
                 }, 2000);
             }
             catch(error){
+                // Handling different error scenarios and displaying appropriate toast messages
                 if (error.response){
                     if (error.response.data.hasOwnProperty('password')){
                         const message = error.response.data.password;
@@ -127,13 +143,19 @@ const SignUp = () => {
 
     }
 
-
+    /**
+     * Function to simulate form submission
+     */
     const submitForm = () => {    
         handleSubmit({
           preventDefault: () => {}, 
         });
       };
     
+      /**
+       * Function to perform client-side validation of form fields
+       * @returns {boolean} All fields are inputed correctly (true or false)
+       */
     const validate = () => {
         let result = true;
         // console.log(formData.first_name);
@@ -343,6 +365,7 @@ const SignUp = () => {
         return result;
     }
     
+    // Rendering the component
     return ( 
         <div className="sign-up-container">
             <div className="left">
@@ -1305,4 +1328,5 @@ const SignUp = () => {
      );
 }
  
+// Exporting the component
 export default SignUp;
