@@ -16,6 +16,7 @@ import { useState } from 'react';
 
 import { useProfile, ProfileProvider } from '../context/ProfileContext';
 import EditProfile from './EditProfile';
+import CircularProgress from '@mui/joy/CircularProgress';
 /**
  * Component representing a user's profile page.
  * @returns {JSX.Element} React component
@@ -72,7 +73,17 @@ const Profile = () => {
         <div className="userProfile-container">
             {/* Navbar component for navigation */}
             <Navbar />
-            {isPending && <div> Loading </div>}
+            {isPending && 
+                <div className="loading-bar">
+                
+                <CircularProgress
+                    color="primary"
+                    determinate={false}
+                    size="lg"
+                    variant="solid"
+                    
+                />
+                </div>}
 
             
             {/* Displaying user profile content if data is available */}

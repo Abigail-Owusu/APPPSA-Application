@@ -11,12 +11,14 @@ import comments from '../images/comments.png'
 import { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 
+
 // Importing custom hooks for data fetching and authentication
 import useFetch from '../hooks/useFetch';
 import useAuth from '../hooks/useAuth';
 import '../css/Modal.css';
 import axiosInstance from '../api/axiosInstance';
 import { useNavigate } from 'react-router-dom';
+import CircularProgress from '@mui/joy/CircularProgress';
 
 
 /**
@@ -29,11 +31,12 @@ const Discussions = () => {
     const { auth, setAuth } = useAuth();
     const navigate = useNavigate();
 
+
     const [postData, setPostData] = useState({
         title: '',
         content: '',
         image: null,
-    
+
     });
 
     const handleChange = (e) => {
@@ -57,12 +60,11 @@ const Discussions = () => {
         document.body.classList.remove('active-modal')
     }
 
-    const createDiscussion = async(e) => {
+    const createDiscussion = async (e) => {
         e.preventDefault();
 
         if (validate()) {
-            // console.log(postData);
-            try{
+            try {
                 const response = await axiosInstance.post('api/posts/create/', postData);
 
                 toast.success("Discussion created successfully", {
@@ -75,11 +77,11 @@ const Discussions = () => {
 
                 // setTimeout(() => {
                 //     navigate('/discussions')
-                    
+
                 // }, 2000);
 
             }
-            catch(error){
+            catch (error) {
                 console.log(error);
             }
         }
@@ -111,7 +113,17 @@ const Discussions = () => {
             <div className='discussions-container'>
                 <Navbar />
 
-                {isPending && <div> Loading... </div>}
+                {isPending && 
+                <div className="loading-bar">
+                
+                <CircularProgress
+                    color="primary"
+                    determinate={false}
+                    size="lg"
+                    variant="solid"
+                    
+                />
+                </div>}
                 {blogs && <DiscussionCard discussions={blogs} handleClick={toggleModal} />}
 
                 <Messages />
@@ -128,32 +140,32 @@ const Discussions = () => {
                         <div className="create-discussion-form">
                             <form onSubmit={createDiscussion}>
                                 <h4> Discussion title <span> * </span> </h4>
-                                <input 
-                                type="text" 
-                                name="title" 
-                                id="title"
-                                placeholder='Enter a title for your discussion'
-                                value={postData.title}
-                                onChange={handleChange}
-                                 />
+                                <input
+                                    type="text"
+                                    name="title"
+                                    id="title"
+                                    placeholder='Enter a title for your discussion'
+                                    value={postData.title}
+                                    onChange={handleChange}
+                                />
 
                                 <h4> Discussion details <span> * </span></h4>
-                                <textarea 
-                                name="content" 
-                                id="content" 
-                                cols="30" 
-                                rows="10"
-                                placeholder='Enter details for your discussion'
-                                value={postData.content}
-                                onChange={handleChange}
+                                <textarea
+                                    name="content"
+                                    id="content"
+                                    cols="30"
+                                    rows="10"
+                                    placeholder='Enter details for your discussion'
+                                    value={postData.content}
+                                    onChange={handleChange}
                                 ></textarea>
 
                                 <h4> Upload an Image (Optional) </h4>
-                                <input 
-                                type="file" 
-                                name="" 
-                                id="" 
-                                
+                                <input
+                                    type="file"
+                                    name=""
+                                    id=""
+
                                 />
 
                                 <br />
