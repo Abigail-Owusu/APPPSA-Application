@@ -17,23 +17,24 @@ const DonationCard = ({initiatives}) => {
                 <div className="donation-card">
                     <div className="progress-row">
                         {console.log(initiative)}
-                        <div className="progress-circle" data-content={`${3}%`}>
-                            <progress value="75" min="0" max="100">75%</progress>
+                        <div className="progress-circle" style={{ width: '35%', height: '75%', borderRadius: '50%', background: `radial-gradient(closest-side, #F4F4F4 90%, transparent 70% 100%), ${initiative.percentage}` }} data-content={`${initiative.percentage}%`}>
+                            <progress value="75" min="0" max="100"> 0 </progress>
                         </div>
                         <div className="donation-card-details">
-                            <h3> {initiative.name} </h3>
+                            <h3> {initiative.data.name} </h3>
                             <p> {initiative.description} </p>
                             <div className="donation-card-info">
                                 <img src={info} alt="" />
-                                {/* {console.log(intiative)} */}
-                                <Link to={`/donate/${initiative.initiative_id}`} className='donation-nav-link'> More info </Link>
+                                {console.log(initiative.data.initiative_id)}
+                                <Link to={`/donate/${initiative.data.initiative_id}`} className='donation-nav-link'> More info </Link>
                             </div>
                         </div>
                     </div>
                     <div className="progress-bar">
                         <div className="progress-indicator"></div>
                     </div>
-                    <h5 className='target'> GHC 18,000/{initiative.total_target_amount} </h5>
+                    {/* {console.log(initiative.current_amount)} */}
+                    <h5 className='target'> {initiative.current_amount}/{initiative.data.total_target_amount} </h5>
                 </div>
 
 

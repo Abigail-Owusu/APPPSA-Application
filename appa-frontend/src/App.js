@@ -34,7 +34,7 @@ function App() {
               <Route path="/profile/:email" element={<Profile />} />
               <Route path="/edit-profile" element={<EditProfile />} />
               <Route path="/donate" element={<Donations />} /> 
-              <Route path="/donate/:id" element={<DonationPage />} />
+              <Route path="/donate/:initiative_id" element={<DonationPage />} />
             </Route>
 
             <Route path="/login" element={<Login />} />
