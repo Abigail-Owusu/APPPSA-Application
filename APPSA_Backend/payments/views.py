@@ -3,8 +3,8 @@ import requests
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from .models import Payment, Intiatives
-from .serializers import PaymentSerializer, IntiativesSerializer
+from .models import Payment, Initiatives
+from .serializers import PaymentSerializer, InitiativesSerializer
 from rest_framework import status
 from APPSA_Backend import settings
 from django.db.models import Sum
@@ -63,7 +63,7 @@ def send_payment(request):
                 sender=request.user,
                 amount=request.data.get('amount'),
                 momo_number=request.data.get('momo_number'),
-                initiative=Intiatives.objects.get(intiative_id=request.data.get('initiative'))
+                initiative=Initiatives.objects.get(intiative_id=request.data.get('initiative'))
             )
             
             # Payment initiation successful
@@ -78,7 +78,7 @@ def create_initiative(request):
     """
     Create an initiative
     """
-    serializer = IntiativesSerializer(data=request.data)
+    serializer = InitiativesSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response({'message': 'Initiative created successfully', 'data': serializer.data}, status=status.HTTP_201_CREATED)
@@ -90,8 +90,19 @@ def get_initiatives(request):
     """
     Get all initiatives
     """
-    initiatives = Intiatives.objects.all()
-    serializer = IntiativesSerializer(initiatives, many=True)
+    initiatives = Initiatives.objects.all()
+    serializer = []
+    for initiative in initiatives:
+        target_amount = Initiatives.objects.get(initiative_id=initiative.initiative_id).total_target_amount
+        current_amount_dict = Payment.objects.filter(initiative=initiative).aggregate(Sum('amount'))
+        current_amount = current_amount_dict.get('amount__sum', 0)
+        serializer.append({
+            'data': InitiativesSerializer(initiative).data,
+            'current_amt': current_amount,
+            'target_amount': target_amount,
+            'percentage': round((current_amount/target_amount)*100)
+        })
+    serializer = InitiativesSerializer(initiatives, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -103,8 +114,8 @@ def get_currentdonations_in_percentage(request):
     Get the current donations in percentage
     """
     initiative_id = request.query_params.get('initiative_id')
-    target_amount = Intiatives.objects.get(intiative_id=initiative_id).total_target_amount
-    initative = Intiatives.objects.get(intiative_id=initiative_id)
+    target_amount = Initiatives.objects.get(intiative_id=initiative_id).total_target_amount
+    initative = Initiatives.objects.get(intiative_id=initiative_id)
     current_amount_dict = Payment.objects.filter(initiative=initative).aggregate(Sum('amount')) # Get the sum of all payments for this initiative in a dictionary
     current_amount = current_amount_dict.get('amount__sum', 0)# Get the sum of all payments for this initiative in a dictionary
     return Response({'percentage': (current_amount/target_amount)*100}, status=status.HTTP_200_OK)
@@ -116,7 +127,7 @@ def delete_initiative(request):
     Delete an initiative
     """
     initiative_id = request.query_params.get('initiative_id')
-    Intiatives.objects.get(intiative_id=initiative_id).delete()
+    Initiatives.objects.get(intiative_id=initiative_id).delete()
     return Response({'message': 'Initiative deleted successfully'}, status=status.HTTP_200_OK)
 
 @api_view(['PATCH'])
@@ -126,8 +137,8 @@ def update_initiative(request):
     Update an initiative
     """
     initiative_id = request.query_params.get('initiative_id')
-    initiative = Intiatives.objects.get(intiative_id=initiative_id)
-    serializer = IntiativesSerializer(initiative, data=request.data)
+    initiative = Initiatives.objects.get(intiative_id=initiative_id)
+    serializer = InitiativesSerializer(initiative, data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response({'message': 'Initiative updated successfully', 'data': serializer.data}, status=status.HTTP_200_OK)
@@ -140,9 +151,9 @@ def get_initiative_by_id(request):
     Get an initiative by id
     """
     initiative_id = request.query_params.get('initiative_id')
-    initiative = Intiatives.objects.get(intiative_id=initiative_id)
-    serializer = IntiativesSerializer(initiative)
-    target_amount = Intiatives.objects.get(intiative_id=initiative_id).total_target_amount
+    initiative = Initiatives.objects.get(intiative_id=initiative_id)
+    serializer = InitiativesSerializer(initiative)
+    target_amount = Initiatives.objects.get(intiative_id=initiative_id).total_target_amount
     current_amount_dict = Payment.objects.filter(initiative=initiative).aggregate(Sum('amount')) # Get the sum of all payments for this initiative in a dictionary
     current_amount = current_amount_dict.get('amount__sum', 0)
 
