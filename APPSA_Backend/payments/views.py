@@ -151,7 +151,7 @@ def get_initiative_by_id(request):
         "data":serializer.data, 
         'current_amt': current_amount, 
         'target_amount': target_amount,
-        'percentage': (current_amount/target_amount)*100
+        'percentage': round((current_amount/target_amount)*100)
         }, status=status.HTTP_200_OK)
 
     

@@ -33,7 +33,7 @@ const DonationCard = ({initiatives}) => {
                     <div className="progress-bar">
                         <div className="progress-indicator"></div>
                     </div>
-                    <h5 className='target'> GHC 18,000/GHC 65,000 </h5>
+                    <h5 className='target'> GHC 18,000/{initiative.total_target_amount} </h5>
                 </div>
 
 
