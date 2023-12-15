@@ -10,3 +10,4 @@ pyodbc
 python-decouple
 # mysql pkg-config
 pymysql
+azure-identity

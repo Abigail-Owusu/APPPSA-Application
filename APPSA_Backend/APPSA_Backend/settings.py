@@ -20,6 +20,8 @@ import pyodbc
 from dotenv import load_dotenv
 from decouple import config
 import pymysql
+from azure.identity import ManagedIdentityCredential, ClientSecretCredential
+import os
 
 
 
@@ -35,8 +37,13 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+# Uncomment the following lines according to the authentication type.
+# system-assigned managed identity
+cred = ManagedIdentityCredential()
 
-# Application definition
+# acquire token
+accessToken = cred.get_token('https://ossrdbms-aad.database.windows.net/.default')
+
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -98,21 +105,35 @@ load_dotenv()
 # Load environment variables from .env file
 config_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
 # config.read(config_file)
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': '3306',
-        'OPTIONS': {
-            'ssl': {'ca': './DigiCertGlobalRootCA.crt.pem'}
-        }
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.mysql",
+#         'NAME': config('DB_NAME'),
+#         'USER': config('DB_USER'),
+#         'PASSWORD': config('DB_PASSWORD'),
+#         'HOST': config('DB_HOST'),
+#         'PORT': '3306',
+#         'OPTIONS': {
+#             'ssl': {'ca': './DigiCertGlobalRootCA.crt.pem'}
+#         }
 
+#     }
+# }
+
+host = os.getenv('AZURE_MYSQL_HOST')
+database = os.getenv('AZURE_MYSQL_NAME')
+user = os.getenv('AZURE_MYSQL_USER')
+password = accessToken.token # this is accessToken acquired from above step.
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': database,
+        'USER': user,
+        'PASSWORD': password,
+        'HOST': host
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
