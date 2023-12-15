@@ -147,3 +147,37 @@
     max-height: 1rem;align-items: center;
     gap: 0.5rem;
 }
+
+/* .input-container {
+    /* margin: 20px; 
+  } */
+  
+  textarea {
+    width: 20%;
+    transition: height 0.5s ease;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .input-container.focused textarea {
+    height: 100px; /* Adjust the height as needed */
+    width: 96%;
+  }
+
+  .comment-submit-button{
+    background-color: #000071;
+    color: white;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    /* margin: auto; */
+  }
+  
+  #comment-submit-box{
+    display: flex;
+    justify-content: flex-end;
+    width: 98%;
+    /* border-top: 1px solid #000071; */
+  }

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import send_payment,create_initiative, get_initiatives, get_currentdonations_in_percentage, delete_initiative, update_initiative
+from .views import send_payment,create_initiative, get_initiatives, get_currentdonations_in_percentage, delete_initiative, update_initiative, get_initiative_by_id
 
 urlpatterns = [
     path('send_payment/', send_payment, name='send-payment'),
@@ -8,6 +8,7 @@ urlpatterns = [
     path('get_currentdonations_in_percentage', get_currentdonations_in_percentage, name='get-currentdonations-in-percentage'),
     path('delete_initiative', delete_initiative, name='delete-initiative'),
     path('update_initiative', update_initiative, name='update-initiative'),
+    path('get_initiative_by_id', get_initiative_by_id, name='get-initiative-by-id')
 
 
 

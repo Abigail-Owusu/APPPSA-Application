@@ -63,7 +63,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     district = models.CharField(max_length=100, null=False, blank=False)
     country = models.CharField(max_length=150, null=False, blank=False)
     profession = models.CharField(max_length=200, null=False, blank=False)
-    current_organization = models.CharField(max_length=200, null=False, blank=False)
+    current_organization = models.CharField(max_length=200, null=True, blank=True)
     dob = models.DateField(null=False, blank=False)
     tel_code = models.CharField(max_length=20, null=False, blank=False)
     telephone = models.CharField( max_length=20, null=False, blank=False, unique=True)
@@ -73,6 +73,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         max_length=200, null=False, blank=False)
     last_name_next_of_kin = models.CharField(
         max_length=200, null=False, blank=False)
+    tel_code_kin = models.CharField(max_length=20, null=False, blank=False, default='+233')
     tel_next_of_kin = models.CharField(max_length=20, null=False, blank=False)
     year_group1 = models.IntegerField(null=False, blank=False)
     year_group2 = models.IntegerField(null=True, blank=True)
@@ -84,11 +85,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
+    course_studied = models.CharField(max_length=200, null=True, blank=True)
 
     objects = CustomUserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['title', 'first_name', 'last_name', 'nationality', 'postal_code', 'city', 'district',
-                       'country', 'profession', 'current_organization', 'dob', 'tel_code', 'telephone',
+                       'country', 'profession', 'dob', 'tel_code', 'telephone',
                         'first_name_next_of_kin', 'last_name_next_of_kin', 'tel_next_of_kin',
                        'year_group1', 'chapter1', 'house1']
 

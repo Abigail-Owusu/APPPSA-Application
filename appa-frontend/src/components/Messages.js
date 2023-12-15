@@ -6,6 +6,11 @@ import msg_profile_3 from '../images/profiles/profile3.png'
 import msg_profile_4 from '../images/profiles/profile4.png'
 import msg_details from '../images/msg-detail.png'
 
+
+/**
+ * Messages component displays a list of messages.
+ * @returns {JSX.Element} - The rendered Messages component.
+ */
 const Messages = () => {
     return ( 
         <div className="message-container">
@@ -18,6 +23,8 @@ const Messages = () => {
             </div>
             <div className="messages">
                 <h1> Messages </h1>
+
+                {/* Message card for a new message */}
                 <div className="message-card new">    
                     <div className="message-img">
                         <img src={msg_profile_1} alt="" />
@@ -83,4 +90,5 @@ const Messages = () => {
      );
 }
  
+// Exporting the Messages component
 export default Messages;
