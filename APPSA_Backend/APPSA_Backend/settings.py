@@ -174,6 +174,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'a.p.p.s.a.platform@gmail.com'
 EMAIL_HOST_PASSWORD = 'hkaazbmjvrzjhvpe'
 BASE_URL = 'http://localhost:8000'
+DEPLOYED_URL = 'http://3.80.101.10:80'
 
 REQUESTS_CA_BUNDLE = certifi.where()
 CORS_REPLACE_HTTPS_REFERER      = False

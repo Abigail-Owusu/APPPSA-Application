@@ -10,7 +10,7 @@ from django.core.validators import RegexValidator
 def send_verification_email(user, verification_token):
     uid = urlsafe_base64_encode(force_bytes(user.pk))
     
-    verification_link = f'{settings.BASE_URL}/api/verify?{urlencode({"uid": uid})}'
+    verification_link = f'{settings.DEPLOYED_URL}/api/verify?{urlencode({"uid": uid})}'
 
     subject = 'Verify your email address'
     message = f'Click the following link to verify your email: {verification_link}'
