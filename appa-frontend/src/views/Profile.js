@@ -44,7 +44,6 @@ const Profile = () => {
 
     // Using custom hooks for authentication and URL parameters
     const { auth, setAuth } = useAuth();
-    const {postId} = useParams();
 
     // Extracting post_id from the URL parameters using React Router
     const { email } = useParams();

@@ -16,7 +16,8 @@ const DonationCard = ({initiatives}) => {
             {initiatives.map((initiative) => (
                 <div className="donation-card">
                     <div className="progress-row">
-                        <div className="progress-circle">
+                        {console.log(initiative)}
+                        <div className="progress-circle" data-content={`${3}%`}>
                             <progress value="75" min="0" max="100">75%</progress>
                         </div>
                         <div className="donation-card-details">
@@ -24,9 +25,8 @@ const DonationCard = ({initiatives}) => {
                             <p> {initiative.description} </p>
                             <div className="donation-card-info">
                                 <img src={info} alt="" />
-                                <Link to="/donate/:id" className='donation-nav-link'>
-                                    More info
-                                </Link>
+                                {/* {console.log(intiative)} */}
+                                <Link to={`/donate/${initiative.intiative_id}`} className='donation-nav-link'> More info </Link>
                             </div>
                         </div>
                     </div>

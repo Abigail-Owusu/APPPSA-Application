@@ -110,12 +110,11 @@
 }
 
 .progress-circle::before {
-    content: "25%";
+    content: attr(data-content);
     font-size: 3rem;
     font-weight: 700;
     color: #000071;
-    font-style: italic;
-    
+    font-style: italic; 
 }
 
 .donation-card-details{
