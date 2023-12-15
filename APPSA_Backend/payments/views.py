@@ -91,19 +91,29 @@ def get_initiatives(request):
     Get all initiatives
     """
     initiatives = Initiatives.objects.all()
-    serializer = []
+    serialized_data = []
+
     for initiative in initiatives:
-        target_amount = Initiatives.objects.get(initiative_id=initiative.initiative_id).total_target_amount
+        # Serialize the initiative without the additional information
+        serializer = InitiativesSerializer(initiative)
+
+        # Calculate additional information
+        target_amount = int(initiative.total_target_amount)
         current_amount_dict = Payment.objects.filter(initiative=initiative).aggregate(Sum('amount'))
-        current_amount = current_amount_dict.get('amount__sum', 0)
-        serializer.append({
-            'data': InitiativesSerializer(initiative).data,
-            'current_amt': current_amount,
+        current_amount = int(current_amount_dict.get('amount__sum', 0))
+        percentage = int((current_amount / target_amount) * 100) 
+
+        # Include the additional information in the serialized data
+        initiative_data = {
+            "data": serializer.data,
+            'current_amount': current_amount,
             'target_amount': target_amount,
-            'percentage': round((current_amount/target_amount)*100)
-        })
-    serializer = InitiativesSerializer(initiatives, many=True)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+            'percentage': percentage
+        }
+
+        serialized_data.append(initiative_data)
+
+    return Response(serialized_data, status=status.HTTP_200_OK)
 
 
 
@@ -153,16 +163,16 @@ def get_initiative_by_id(request):
     initiative_id = request.query_params.get('initiative_id')
     initiative = Initiatives.objects.get(intiative_id=initiative_id)
     serializer = InitiativesSerializer(initiative)
-    target_amount = Initiatives.objects.get(intiative_id=initiative_id).total_target_amount
+    target_amount = int(Initiatives.objects.get(intiative_id=initiative_id).total_target_amount)
     current_amount_dict = Payment.objects.filter(initiative=initiative).aggregate(Sum('amount')) # Get the sum of all payments for this initiative in a dictionary
-    current_amount = current_amount_dict.get('amount__sum', 0)
+    current_amount = int(current_amount_dict.get('amount__sum', 0))
 
     
     return Response({
         "data":serializer.data, 
         'current_amt': current_amount, 
         'target_amount': target_amount,
-        'percentage': round((current_amount/target_amount)*100)
+        'percentage': int((current_amount/target_amount)*100)
         }, status=status.HTTP_200_OK)
 
     
