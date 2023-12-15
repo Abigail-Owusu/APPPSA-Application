@@ -26,7 +26,7 @@ const DonationCard = ({initiatives}) => {
                             <div className="donation-card-info">
                                 <img src={info} alt="" />
                                 {/* {console.log(intiative)} */}
-                                <Link to={`/donate/${initiative.intiative_id}`} className='donation-nav-link'> More info </Link>
+                                <Link to={`/donate/${initiative.initiative_id}`} className='donation-nav-link'> More info </Link>
                             </div>
                         </div>
                     </div>
