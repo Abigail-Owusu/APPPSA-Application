@@ -39,6 +39,7 @@ const Discussions = () => {
 
     });
 
+ 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setPostData({ ...postData, [name]: value });
@@ -74,16 +75,6 @@ const Discussions = () => {
                         width: '400px',
                     },
                 });
-
-                const updatedDiscussions = await axiosInstance.get('http://127.0.0.1:8000/api/posts/', auth.accessToken);
-                blogs = updatedDiscussions;
-                toggleModal();
-                // updatedDiscussions && (blogs = updatedDiscussions.data)
-
-                // setTimeout(() => {
-                //     navigate('/discussions')
-
-                // }, 2000);
 
             }
             catch (error) {

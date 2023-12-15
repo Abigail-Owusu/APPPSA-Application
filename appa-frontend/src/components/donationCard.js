@@ -22,7 +22,7 @@ const DonationCard = ({initiatives}) => {
                         </div>
                         <div className="donation-card-details">
                             <h3> {initiative.data.name} </h3>
-                            <p> {initiative.description} </p>
+                            <p> {initiative.data.description} </p>
                             <div className="donation-card-info">
                                 <img src={info} alt="" />
                                 {console.log(initiative.data.initiative_id)}

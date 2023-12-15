@@ -35,6 +35,19 @@ body.active-modal {
     height: 75%;
 }
 
+.payment{
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1.4;
+    background: white;
+    padding: 14px 28px;
+    border-radius: 3px;
+    width: 30%;
+    height: 45%;
+}
+
 .close-modal {
     position: absolute;
     top: 10px;
