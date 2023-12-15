@@ -19,6 +19,7 @@ def create_post(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def comment_on_post(request):
+    # Comment on a post
     serializer = CommentSerializer(data=request.data)
     first_name = request.user.first_name
     last_name = request.user.last_name
@@ -34,6 +35,7 @@ def comment_on_post(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def like_post(request):
+    # Like or unlike a post
     post_id = request.data.get('post_id')
     post = Post.objects.get(pk=post_id)
     post_author = post.user.email
@@ -48,6 +50,7 @@ def like_post(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_number_of_likes(request):
+    # Retrieve the number of likes on a post
     post_id = request.query_params.get('post_id')
     post = Post.objects.get(pk=post_id)
     return Response({'number_of_likes': post.likes.count()}, status=status.HTTP_200_OK)
@@ -55,6 +58,7 @@ def get_number_of_likes(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_number_of_comments(request):
+    # Retrieve the number of comments on a post
     post_id = request.query_params.get('post_id')
     comment = Comment.objects.filter(post_id=post_id)
     return Response({'number_of_comments': comment.count()}, status=status.HTTP_200_OK)
