@@ -27,38 +27,38 @@ const DiscussionCard = ({ discussions, handleClick }) => {
     };
 
     const [authorsInfo, setAuthorsInfo] = useState([]);
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchAuthorsInfo = async () => {
-            try {
-                const authorsInfoPromises = discussions.map(async (discussion) => {
-                    const response = await axiosInstance.get(`/api/profile?email=${discussion.user}`);
-                    return response.data;
-                });
+    // useEffect(() => {
+    //     const fetchAuthorsInfo = async () => {
+    //         try {
+    //             const authorsInfoPromises = discussions.map(async (discussion) => {
+    //                 const response = await axiosInstance.get(`/api/profile?email=${discussion.user}`);
+    //                 return response.data;
+    //             });
 
-                const fetchedAuthorsInfo = await Promise.all(authorsInfoPromises);
-                setAuthorsInfo(fetchedAuthorsInfo);
-                setLoading(false); // Set loading to false once authors' information is fetched
-            } catch (error) {
-                console.error('Error fetching authors information:', error);
-                setLoading(false); // Set loading to false in case of an error
-            }
-        };
+    //             const fetchedAuthorsInfo = await Promise.all(authorsInfoPromises);
+    //             setAuthorsInfo(fetchedAuthorsInfo);
+    //             setLoading(false); // Set loading to false once authors' information is fetched
+    //         } catch (error) {
+    //             console.error('Error fetching authors information:', error);
+    //             setLoading(false); // Set loading to false in case of an error
+    //         }
+    //     };
 
-        fetchAuthorsInfo();
-    }, [discussions]);
+    //     fetchAuthorsInfo();
+    // }, [discussions]);
 
-    if (loading) {
-        return <div className="loading-bar">
-            <CircularProgress
-                color="primary"
-                determinate={false}
-                size="lg"
-                variant="solid"
-            />
-        </div>
-    }
+    // if (loading) {
+    //     return <div className="loading-bar">
+    //         <CircularProgress
+    //             color="primary"
+    //             determinate={false}
+    //             size="lg"
+    //             variant="solid"
+    //         />
+    //     </div>
+    // }
     return (
         // {authorsInfo }
         <div className="discussion-content">
@@ -67,9 +67,9 @@ const DiscussionCard = ({ discussions, handleClick }) => {
                 <button onClick={handleNewDiscussion}>New Discussion</button>
             </div>
 
-            {/* Container for discussion cards */}
+
             <div className="cards">
-                {/* {console.log(authorsInfo)} */}
+
                 {/* Map through each discussion and create a card */}
                 {discussions.map((discussion, index) => (
                     <div className="discussion-card" key={discussion.post_id}>
@@ -83,7 +83,7 @@ const DiscussionCard = ({ discussions, handleClick }) => {
                                     <img src={dsc_profile_1} alt="" />
                                 </div>
                                 {/* Render the author's name based on the user information */}
-                                <h5>{authorsInfo[index]?.data.first_name} {authorsInfo[index]?.data.last_name}</h5>
+                                <h5> Jane Doe </h5>
                             </div>
                             <p> Posted: {discussion.timestamp} </p>
                         </a>
@@ -94,7 +94,7 @@ const DiscussionCard = ({ discussions, handleClick }) => {
                             </div>
                             <div className="comments">
                                 <img src={comments} alt="" />
-                                <h6> 95 </h6>
+                                <h6> {discussion.comments.length} </h6>
                             </div>
                         </div>
                     </div>

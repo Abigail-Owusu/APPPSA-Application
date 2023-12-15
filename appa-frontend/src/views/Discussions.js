@@ -75,6 +75,11 @@ const Discussions = () => {
                     },
                 });
 
+                const updatedDiscussions = await axiosInstance.get('http://127.0.0.1:8000/api/posts/', auth.accessToken);
+                blogs = updatedDiscussions;
+                toggleModal();
+                // updatedDiscussions && (blogs = updatedDiscussions.data)
+
                 // setTimeout(() => {
                 //     navigate('/discussions')
 
@@ -106,7 +111,9 @@ const Discussions = () => {
         }
 
         return result;
-    }
+    };
+
+
     // Rendering the component
     return (
         <>
