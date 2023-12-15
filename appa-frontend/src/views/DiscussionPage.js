@@ -37,7 +37,7 @@ const DiscussionPage = () => {
 
     // Using custom hooks for authentication and data fetching
     const { auth, setAuth } = useAuth();
-    const { data: discussion, error, isPending } = useFetch("http://127.0.0.1:8000/api/posts/post?post_id=" + post_id, auth.accessToken);
+    const { data: discussion, error, isPending } = useFetch("http://3.80.101.10:80/api/posts/post?post_id=" + post_id, auth.accessToken);
     // console.log(discussion?.comments[0]);
 
     const [isFocused, setIsFocused] = useState(false);

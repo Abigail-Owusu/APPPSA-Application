@@ -18,7 +18,7 @@ const Donations = () => {
 
     const { auth, setAuth } = useAuth();
 
-    const { data: inititatives, isPending, error } = useFetch('http://127.0.0.1:8000/api/get_initiatives', auth.accessToken);
+    const { data: inititatives, isPending, error } = useFetch('http://3.80.101.10:80/api/get_initiatives', auth.accessToken);
     console.log(inititatives);
 
     // Rendering the component

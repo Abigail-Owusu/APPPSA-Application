@@ -28,7 +28,7 @@ const CommentCard = ({ comments }) => {
                         </div>
                         <div className="comments">
                             <img src={comments_img} alt="" />
-                            <h5> 6 </h5>
+                            <h5> 0 </h5>
                         </div>
 
                     </div>

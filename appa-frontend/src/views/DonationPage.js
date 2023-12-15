@@ -22,7 +22,7 @@ const DonationPage = () => {
     const [modal, setModal] = useState(false);
 
     const { initiative_id } = useParams();
-    const { data: initiative, error, isPending } = useFetch("http://127.0.0.1:8000/api/get_initiative_by_id?initiative_id=" + initiative_id, auth.accessToken);
+    const { data: initiative, error, isPending } = useFetch("http://3.80.101.10:80/api/get_initiative_by_id?initiative_id=" + initiative_id, auth.accessToken);
     console.log(initiative);
 
     const toggleModal = () => {

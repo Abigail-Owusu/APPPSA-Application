@@ -49,7 +49,7 @@ const Profile = () => {
     const { email } = useParams();
 
     // Fetching user profile data from the API using custom hook useFetch
-    const { data: profile, error, isPending } = useFetch("http://127.0.0.1:8000/api/profile?email=" + email, auth.accessToken);
+    const { data: profile, error, isPending } = useFetch("http://3.80.101.10:80/api/profile?email=" + email, auth.accessToken);
     console.log(profile);
 
 

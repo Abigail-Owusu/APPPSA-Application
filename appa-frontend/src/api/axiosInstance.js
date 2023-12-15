@@ -4,7 +4,7 @@ import axios from 'axios';
 // Create an instance of axios with custom configurations
 const axiosInstance = axios.create({
     // Specify the base URL for API requests
-    baseURL: 'http://127.0.0.1:8000',
+    baseURL: 'http://3.80.101.10:80',
     // Set default headers for all requests to 'application/json'
     headers: {
         // 'Authorization': accessToken && `Token ${accessToken}`, 

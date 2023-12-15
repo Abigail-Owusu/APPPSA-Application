@@ -46,7 +46,7 @@ const Discussions = () => {
     };
 
     // Fetching blog data from the API using custom hook useFetch
-    const { data: blogs, isPending, error } = useFetch('http://127.0.0.1:8000/api/posts/', auth.accessToken);
+    const { data: blogs, isPending, error } = useFetch('http://3.80.101.10:80/api/posts/', auth.accessToken);
 
     const [modal, setModal] = useState(false);
 
